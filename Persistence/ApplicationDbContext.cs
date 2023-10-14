@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using OnlineAuctionSystem.Persistence.Entities;
+using OnlineAuctionApplication.Persistence.Entities;
 using System.Threading.Tasks;
 
-namespace OnlineAuctionSystem.Persistence
+namespace OnlineAuctionApplication.Persistence
 {
     public class ApplicationDbContext : DbContext
     {
@@ -14,8 +14,8 @@ namespace OnlineAuctionSystem.Persistence
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            UserDb user1 = new UserDb { Id = -1  };
-            UserDb user2 = new UserDb { Id = -2  };
+            UserDb user1 = new UserDb { Id = -1, Username = "user1"  };
+            UserDb user2 = new UserDb { Id = -2, Username = "user2" };
 
             modelBuilder.Entity<UserDb>()
                 .HasData(user1, user2);

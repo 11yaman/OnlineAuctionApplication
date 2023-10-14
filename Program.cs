@@ -1,8 +1,9 @@
 using Microsoft.EntityFrameworkCore;
-using OnlineAuctionSystem.Core.Models;
-using OnlineAuctionSystem.Core.Services;
-using OnlineAuctionSystem.Persistence;
-using OnlineAuctionSystem.Persistence.Repositories;
+using OnlineAuctionApplication.Core.Services;
+using OnlineAuctionApplication.Persistence;
+using OnlineAuctionApplication.Persistence.Repositories;
+using OnlineAuctionApplication.Data;
+using OnlineAuctionApplication.Areas.Identity.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,7 +17,16 @@ builder.Services.AddAutoMapper(typeof(Program));
 
 // db, with dependency injection
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("ApplicationDbConnection")));
+    options.UseSqlServer(builder.Configuration.GetConnectionString(
+        "ApplicationDbConnection")));
+// Identity db
+builder.Services.AddDbContext<ApplicationIdentityContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString(
+        "ApplicationIdentityDbConnection")));
+
+builder.Services.AddDefaultIdentity<ApplicationIdentityUser>(options => 
+    options.SignIn.RequireConfirmedAccount = true)
+    .AddEntityFrameworkStores<ApplicationIdentityContext>();
 
 var app = builder.Build();
 
@@ -32,6 +42,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+app.UseAuthentication();;
 
 app.UseAuthorization();
 
@@ -39,4 +50,5 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
+app.MapRazorPages();
 app.Run();

@@ -1,8 +1,8 @@
-﻿using OnlineAuctionSystem.Core.Models;
+﻿using OnlineAuctionApplication.Core.Models;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace OnlineAuctionSystem.Persistence.Entities
+namespace OnlineAuctionApplication.Persistence.Entities
 {
     public class AuctionDb
     {
@@ -18,7 +18,7 @@ namespace OnlineAuctionSystem.Persistence.Entities
         [Required]
         public DateTime EndTime { get; set; }
 
-        public List<Bid> BidDbs = new List<Bid>();
+        public List<Bid> BidDbs { get; set; } = new List<Bid>();
 
         [ForeignKey("SellerId")]
         public UserDb SellerDb { get; set; }

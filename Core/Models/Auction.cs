@@ -1,5 +1,5 @@
 ﻿
-namespace OnlineAuctionSystem.Core.Models
+namespace OnlineAuctionApplication.Core.Models
 {
     public class Auction
     {

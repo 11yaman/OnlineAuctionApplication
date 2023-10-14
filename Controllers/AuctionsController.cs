@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using OnlineAuctionSystem.Core.Models;
-using OnlineAuctionSystem.Core.Services;
-using OnlineAuctionSystem.ViewModels;
+using OnlineAuctionApplication.Core.Models;
+using OnlineAuctionApplication.Core.Services;
+using OnlineAuctionApplication.ViewModels;
 
-namespace OnlineAuctionSystem.Controllers
+namespace OnlineAuctionApplication.Controllers
 {
     public class AuctionsController : Controller
     {

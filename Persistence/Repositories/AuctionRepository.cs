@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using OnlineAuctionSystem.Core.Models;
-using OnlineAuctionSystem.Persistence.Entities;
+using OnlineAuctionApplication.Core.Models;
+using OnlineAuctionApplication.Persistence.Entities;
 
-namespace OnlineAuctionSystem.Persistence.Repositories
+namespace OnlineAuctionApplication.Persistence.Repositories
 {
     public class AuctionRepository : IAuctionRepository
     {

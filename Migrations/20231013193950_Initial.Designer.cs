@@ -5,11 +5,11 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using OnlineAuctionSystem.Persistence;
+using OnlineAuctionApplication.Persistence;
 
 #nullable disable
 
-namespace OnlineAuctionSystem.Migrations
+namespace OnlineAuctionApplication.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     [Migration("20231013193950_Initial")]
@@ -25,7 +25,7 @@ namespace OnlineAuctionSystem.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("OnlineAuctionSystem.Persistence.Entities.AuctionDb", b =>
+            modelBuilder.Entity("OnlineAuctionApplication.Persistence.Entities.AuctionDb", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -79,7 +79,7 @@ namespace OnlineAuctionSystem.Migrations
                         });
                 });
 
-            modelBuilder.Entity("OnlineAuctionSystem.Persistence.Entities.BidDb", b =>
+            modelBuilder.Entity("OnlineAuctionApplication.Persistence.Entities.BidDb", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -121,7 +121,7 @@ namespace OnlineAuctionSystem.Migrations
                         });
                 });
 
-            modelBuilder.Entity("OnlineAuctionSystem.Persistence.Entities.UserDb", b =>
+            modelBuilder.Entity("OnlineAuctionApplication.Persistence.Entities.UserDb", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -144,9 +144,9 @@ namespace OnlineAuctionSystem.Migrations
                         });
                 });
 
-            modelBuilder.Entity("OnlineAuctionSystem.Persistence.Entities.AuctionDb", b =>
+            modelBuilder.Entity("OnlineAuctionApplication.Persistence.Entities.AuctionDb", b =>
                 {
-                    b.HasOne("OnlineAuctionSystem.Persistence.Entities.UserDb", "SellerDb")
+                    b.HasOne("OnlineAuctionApplication.Persistence.Entities.UserDb", "SellerDb")
                         .WithMany()
                         .HasForeignKey("SellerId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -155,15 +155,15 @@ namespace OnlineAuctionSystem.Migrations
                     b.Navigation("SellerDb");
                 });
 
-            modelBuilder.Entity("OnlineAuctionSystem.Persistence.Entities.BidDb", b =>
+            modelBuilder.Entity("OnlineAuctionApplication.Persistence.Entities.BidDb", b =>
                 {
-                    b.HasOne("OnlineAuctionSystem.Persistence.Entities.AuctionDb", "AuctionDb")
+                    b.HasOne("OnlineAuctionApplication.Persistence.Entities.AuctionDb", "AuctionDb")
                         .WithMany()
                         .HasForeignKey("AuctionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("OnlineAuctionSystem.Persistence.Entities.UserDb", "BidderDb")
+                    b.HasOne("OnlineAuctionApplication.Persistence.Entities.UserDb", "BidderDb")
                         .WithMany()
                         .HasForeignKey("BidderId")
                         .OnDelete(DeleteBehavior.NoAction)

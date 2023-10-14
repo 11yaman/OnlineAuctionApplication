@@ -1,11 +1,20 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.EntityFrameworkCore;
+using OnlineAuctionApplication.Core.Models;
+using System.ComponentModel.DataAnnotations;
 
-namespace OnlineAuctionSystem.Persistence.Entities
+namespace OnlineAuctionApplication.Persistence.Entities
 {
+    [Index(nameof(UserDb.Username), IsUnique = true)]
     public class UserDb
     {
         [Key]
         public int Id { get; set; }
-        // To be added later
+
+        [Required]
+        public string Username { get; set; }
+
+        public List<AuctionDb> AuctionDbs { get; set; } = new List<AuctionDb>();
+        public List<BidDb> BidDbs { get; set; } = new List<BidDb>();
+
     }
 }

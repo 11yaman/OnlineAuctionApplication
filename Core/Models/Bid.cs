@@ -1,4 +1,4 @@
-﻿namespace OnlineAuctionSystem.Core.Models
+﻿namespace OnlineAuctionApplication.Core.Models
 {
     public class Bid
     {
@@ -13,6 +13,13 @@
         {
             Id = id;
             Bidder = bidder;
+            BidAmount = bidAmount;
+        }
+
+        //Mappings constructor
+        public Bid(int id, double bidAmount)
+        {
+            Id = id;
             BidAmount = bidAmount;
         }
     }

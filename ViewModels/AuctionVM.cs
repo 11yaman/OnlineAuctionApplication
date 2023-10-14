@@ -1,4 +1,4 @@
-﻿namespace OnlineAuctionSystem.ViewModels
+﻿namespace OnlineAuctionApplication.ViewModels
 {
     public class AuctionVM
     {

@@ -1,10 +1,10 @@
 ﻿
 using AutoMapper;
-using OnlineAuctionSystem.Core.Models;
-using OnlineAuctionSystem.Persistence.Entities;
-using OnlineAuctionSystem.ViewModels;
+using OnlineAuctionApplication.Core.Models;
+using OnlineAuctionApplication.Persistence.Entities;
+using OnlineAuctionApplication.ViewModels;
 
-namespace OnlineAuctionSystem.Mappings
+namespace OnlineAuctionApplication.Mappings
 {
     public class BidProfile : Profile
     {

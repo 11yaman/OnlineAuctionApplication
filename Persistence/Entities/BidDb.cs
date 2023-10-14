@@ -1,8 +1,8 @@
-﻿using OnlineAuctionSystem.Core.Models;
+﻿using OnlineAuctionApplication.Core.Models;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace OnlineAuctionSystem.Persistence.Entities
+namespace OnlineAuctionApplication.Persistence.Entities
 {
     public class BidDb
     {

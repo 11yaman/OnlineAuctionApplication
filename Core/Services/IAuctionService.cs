@@ -1,6 +1,6 @@
-﻿using OnlineAuctionSystem.Core.Models;
+﻿using OnlineAuctionApplication.Core.Models;
 
-namespace OnlineAuctionSystem.Core.Services
+namespace OnlineAuctionApplication.Core.Services
 {
     public interface IAuctionService
     {

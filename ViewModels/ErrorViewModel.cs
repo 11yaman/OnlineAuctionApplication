@@ -1,4 +1,4 @@
-namespace OnlineAuctionSystem.Models
+namespace OnlineAuctionApplication.Models
 {
     public class ErrorViewModel
     {

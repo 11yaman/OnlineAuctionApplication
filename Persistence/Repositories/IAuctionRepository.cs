@@ -1,6 +1,6 @@
-﻿using OnlineAuctionSystem.Core.Models;
+﻿using OnlineAuctionApplication.Core.Models;
 
-namespace OnlineAuctionSystem.Persistence.Repositories
+namespace OnlineAuctionApplication.Persistence.Repositories
 {
     public interface IAuctionRepository
     {

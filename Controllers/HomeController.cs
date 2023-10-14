@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using OnlineAuctionSystem.Models;
+using OnlineAuctionApplication.Models;
 using System.Diagnostics;
 
-namespace OnlineAuctionSystem.Controllers
+namespace OnlineAuctionApplication.Controllers
 {
     public class HomeController : Controller
     {

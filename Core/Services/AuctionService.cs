@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using OnlineAuctionSystem.Core.Models;
-using OnlineAuctionSystem.Persistence.Repositories;
+using OnlineAuctionApplication.Core.Models;
+using OnlineAuctionApplication.Persistence.Repositories;
 using System.Reflection.Metadata.Ecma335;
 
-namespace OnlineAuctionSystem.Core.Services
+namespace OnlineAuctionApplication.Core.Services
 {
     public class AuctionService : IAuctionService
     {
