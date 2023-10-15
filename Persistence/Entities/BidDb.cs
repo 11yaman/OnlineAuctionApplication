@@ -12,11 +12,11 @@ namespace OnlineAuctionApplication.Persistence.Entities
         public double BidAmount { get; set; }
 
         [ForeignKey("BidderId")]
-        public UserDb BidderDb { get; set; }
-        public int BidderId { get; set; }
+        public UserDb Bidder { get; set; }
+        public String BidderId { get; set; }
 
         [ForeignKey("AuctionId")]
-        public AuctionDb AuctionDb { get; set; }
+        public AuctionDb Auction { get; set; }
         public int AuctionId { get; set; } 
 
     }

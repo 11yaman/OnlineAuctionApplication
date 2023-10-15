@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OnlineAuctionApplication.Core.Models;
@@ -7,6 +8,7 @@ using OnlineAuctionApplication.ViewModels;
 
 namespace OnlineAuctionApplication.Controllers
 {
+    [Authorize]
     public class AuctionsController : Controller
     {
         private readonly IAuctionService auctionService;

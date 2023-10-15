@@ -4,7 +4,9 @@ namespace OnlineAuctionApplication.Core.Services
 {
     public interface IUserService
     {
-        public void Add(User user);
-        public void Update(User user);
+        void Add(User user);
+        Task AddOrUpdateAsync(User user);
+        User GetUserById(string id);
+        void Update(User user);
     }
 }

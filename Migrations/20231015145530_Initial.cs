@@ -17,8 +17,8 @@ namespace OnlineAuctionApplication.Migrations
                 name: "UserDbs",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1")
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Username = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -35,7 +35,7 @@ namespace OnlineAuctionApplication.Migrations
                     Description = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
                     StartingPrice = table.Column<double>(type: "float", nullable: false),
                     EndTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    SellerId = table.Column<int>(type: "int", nullable: false)
+                    SellerId = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -55,7 +55,7 @@ namespace OnlineAuctionApplication.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     BidAmount = table.Column<double>(type: "float", nullable: false),
-                    BidderId = table.Column<int>(type: "int", nullable: false),
+                    BidderId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     AuctionId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -76,11 +76,11 @@ namespace OnlineAuctionApplication.Migrations
 
             migrationBuilder.InsertData(
                 table: "UserDbs",
-                column: "Id",
-                values: new object[]
+                columns: new[] { "Id", "Username" },
+                values: new object[,]
                 {
-                    -2,
-                    -1
+                    { "-1", "user1" },
+                    { "-2", "user2" }
                 });
 
             migrationBuilder.InsertData(
@@ -88,8 +88,8 @@ namespace OnlineAuctionApplication.Migrations
                 columns: new[] { "Id", "Description", "EndTime", "Name", "SellerId", "StartingPrice" },
                 values: new object[,]
                 {
-                    { -2, "Description for Auction 2", new DateTime(2023, 10, 15, 21, 39, 49, 820, DateTimeKind.Local).AddTicks(8741), "Auction 2", -2, 50.0 },
-                    { -1, "Description for Auction 1", new DateTime(2023, 10, 14, 21, 39, 49, 820, DateTimeKind.Local).AddTicks(8654), "Auction 1", -1, 100.0 }
+                    { -2, "Description for Auction 2", new DateTime(2023, 10, 17, 16, 55, 30, 310, DateTimeKind.Local).AddTicks(1591), "Auction 2", "-2", 50.0 },
+                    { -1, "Description for Auction 1", new DateTime(2023, 10, 16, 16, 55, 30, 310, DateTimeKind.Local).AddTicks(1501), "Auction 1", "-1", 100.0 }
                 });
 
             migrationBuilder.InsertData(
@@ -97,8 +97,8 @@ namespace OnlineAuctionApplication.Migrations
                 columns: new[] { "Id", "AuctionId", "BidAmount", "BidderId" },
                 values: new object[,]
                 {
-                    { -2, -2, 60.0, -1 },
-                    { -1, -1, 120.0, -2 }
+                    { -2, -2, 60.0, "-1" },
+                    { -1, -1, 120.0, "-2" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -115,6 +115,12 @@ namespace OnlineAuctionApplication.Migrations
                 name: "IX_BidDbs_BidderId",
                 table: "BidDbs",
                 column: "BidderId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserDbs_Username",
+                table: "UserDbs",
+                column: "Username",
+                unique: true);
         }
 
         /// <inheritdoc />

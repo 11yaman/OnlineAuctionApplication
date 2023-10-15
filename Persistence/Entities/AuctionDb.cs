@@ -1,5 +1,4 @@
-﻿using OnlineAuctionApplication.Core.Models;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace OnlineAuctionApplication.Persistence.Entities
@@ -17,13 +16,11 @@ namespace OnlineAuctionApplication.Persistence.Entities
         public double StartingPrice { get; set; }
         [Required]
         public DateTime EndTime { get; set; }
-
-        public List<Bid> BidDbs { get; set; } = new List<Bid>();
+        public List<BidDb> BidDbs { get; set; } = new List<BidDb>();
 
         [ForeignKey("SellerId")]
-        public UserDb SellerDb { get; set; }
-        public int SellerId { get; set; }
-
+        public UserDb Seller { get; set; }
+        public String SellerId { get; set; }
 
     }
 }

@@ -14,8 +14,8 @@ namespace OnlineAuctionApplication.Persistence
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            UserDb user1 = new UserDb { Id = -1, Username = "user1"  };
-            UserDb user2 = new UserDb { Id = -2, Username = "user2" };
+            UserDb user1 = new UserDb { Id = "-1", Username = "user1"  };
+            UserDb user2 = new UserDb { Id = "-2", Username = "user2" };
 
             modelBuilder.Entity<UserDb>()
                 .HasData(user1, user2);
@@ -27,7 +27,7 @@ namespace OnlineAuctionApplication.Persistence
                 Description = "Description for Auction 1",
                 StartingPrice = 100.0,
                 EndTime = DateTime.Now.AddHours(24),
-                SellerId = -1
+                SellerId = "-1"
             };
 
             AuctionDb auction2 = new AuctionDb 
@@ -37,7 +37,7 @@ namespace OnlineAuctionApplication.Persistence
                 Description = "Description for Auction 2",
                 StartingPrice = 50.0,
                 EndTime = DateTime.Now.AddHours(48),
-                SellerId = -2
+                SellerId = "-2"
             };
 
             modelBuilder.Entity<AuctionDb>()
@@ -47,7 +47,7 @@ namespace OnlineAuctionApplication.Persistence
             {
                 Id = -1,
                 BidAmount = 120.0,
-                BidderId = -2,
+                BidderId = "-2",
                 AuctionId = -1 
             };
 
@@ -55,14 +55,14 @@ namespace OnlineAuctionApplication.Persistence
             {
                 Id = -2,
                 BidAmount = 60.0,
-                BidderId = -1,
+                BidderId = "-1",
                 AuctionId = -2 
             };
 
             modelBuilder.Entity<BidDb>()
-                .HasOne(b => b.BidderDb)
-                .WithMany()
-                .HasForeignKey(b => b.BidderId)
+                .HasOne(bid => bid.Bidder)
+                .WithMany(bidder => bidder.BidDbs)
+                .HasForeignKey(bid => bid.BidderId)
                 .OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<BidDb>().HasData(bid1, bid2);

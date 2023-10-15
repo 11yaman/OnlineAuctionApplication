@@ -15,12 +15,5 @@
             Bidder = bidder;
             BidAmount = bidAmount;
         }
-
-        //Mappings constructor
-        public Bid(int id, double bidAmount)
-        {
-            Id = id;
-            BidAmount = bidAmount;
-        }
     }
 }

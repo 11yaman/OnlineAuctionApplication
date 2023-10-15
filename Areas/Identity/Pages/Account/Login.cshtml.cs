@@ -15,6 +15,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using OnlineAuctionApplication.Areas.Identity.Data;
+using OnlineAuctionApplication.Core.Services;
+using OnlineAuctionApplication.Core.Models;
+using System.Security.Claims;
 
 namespace OnlineAuctionApplication.Areas.Identity.Pages.Account
 {
@@ -22,11 +25,16 @@ namespace OnlineAuctionApplication.Areas.Identity.Pages.Account
     {
         private readonly SignInManager<ApplicationIdentityUser> _signInManager;
         private readonly ILogger<LoginModel> _logger;
+        private readonly IUserService _userService;
+        private readonly UserManager<ApplicationIdentityUser> _userManager;
 
-        public LoginModel(SignInManager<ApplicationIdentityUser> signInManager, ILogger<LoginModel> logger)
+        public LoginModel(SignInManager<ApplicationIdentityUser> signInManager, ILogger<LoginModel> logger, 
+            IUserService userService, UserManager<ApplicationIdentityUser> userManager)
         {
             _signInManager = signInManager;
             _logger = logger;
+            _userService = userService;
+            _userManager = userManager;
         }
 
         /// <summary>
@@ -116,6 +124,13 @@ namespace OnlineAuctionApplication.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
+
+                    var identityUser = await _userManager.FindByNameAsync(Input.Email);
+                    string userId = identityUser.Id;
+                    string userName = identityUser.UserName;
+                    User user = new User(userId, userName);
+                    await _userService.AddOrUpdateAsync(user);
+
                     return LocalRedirect(returnUrl);
                 }
                 if (result.RequiresTwoFactor)

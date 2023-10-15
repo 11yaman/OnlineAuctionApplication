@@ -12,7 +12,7 @@ using OnlineAuctionApplication.Persistence;
 namespace OnlineAuctionApplication.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20231013193950_Initial")]
+    [Migration("20231015145530_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -46,8 +46,9 @@ namespace OnlineAuctionApplication.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<int>("SellerId")
-                        .HasColumnType("int");
+                    b.Property<string>("SellerId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<double>("StartingPrice")
                         .HasColumnType("float");
@@ -63,18 +64,18 @@ namespace OnlineAuctionApplication.Migrations
                         {
                             Id = -1,
                             Description = "Description for Auction 1",
-                            EndTime = new DateTime(2023, 10, 14, 21, 39, 49, 820, DateTimeKind.Local).AddTicks(8654),
+                            EndTime = new DateTime(2023, 10, 16, 16, 55, 30, 310, DateTimeKind.Local).AddTicks(1501),
                             Name = "Auction 1",
-                            SellerId = -1,
+                            SellerId = "-1",
                             StartingPrice = 100.0
                         },
                         new
                         {
                             Id = -2,
                             Description = "Description for Auction 2",
-                            EndTime = new DateTime(2023, 10, 15, 21, 39, 49, 820, DateTimeKind.Local).AddTicks(8741),
+                            EndTime = new DateTime(2023, 10, 17, 16, 55, 30, 310, DateTimeKind.Local).AddTicks(1591),
                             Name = "Auction 2",
-                            SellerId = -2,
+                            SellerId = "-2",
                             StartingPrice = 50.0
                         });
                 });
@@ -93,8 +94,9 @@ namespace OnlineAuctionApplication.Migrations
                     b.Property<double>("BidAmount")
                         .HasColumnType("float");
 
-                    b.Property<int>("BidderId")
-                        .HasColumnType("int");
+                    b.Property<string>("BidderId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
@@ -110,68 +112,86 @@ namespace OnlineAuctionApplication.Migrations
                             Id = -1,
                             AuctionId = -1,
                             BidAmount = 120.0,
-                            BidderId = -2
+                            BidderId = "-2"
                         },
                         new
                         {
                             Id = -2,
                             AuctionId = -2,
                             BidAmount = 60.0,
-                            BidderId = -1
+                            BidderId = "-1"
                         });
                 });
 
             modelBuilder.Entity("OnlineAuctionApplication.Persistence.Entities.UserDb", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Username")
+                        .IsUnique();
 
                     b.ToTable("UserDbs");
 
                     b.HasData(
                         new
                         {
-                            Id = -1
+                            Id = "-1",
+                            Username = "user1"
                         },
                         new
                         {
-                            Id = -2
+                            Id = "-2",
+                            Username = "user2"
                         });
                 });
 
             modelBuilder.Entity("OnlineAuctionApplication.Persistence.Entities.AuctionDb", b =>
                 {
-                    b.HasOne("OnlineAuctionApplication.Persistence.Entities.UserDb", "SellerDb")
-                        .WithMany()
+                    b.HasOne("OnlineAuctionApplication.Persistence.Entities.UserDb", "Seller")
+                        .WithMany("AuctionDbs")
                         .HasForeignKey("SellerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("SellerDb");
+                    b.Navigation("Seller");
                 });
 
             modelBuilder.Entity("OnlineAuctionApplication.Persistence.Entities.BidDb", b =>
                 {
-                    b.HasOne("OnlineAuctionApplication.Persistence.Entities.AuctionDb", "AuctionDb")
-                        .WithMany()
+                    b.HasOne("OnlineAuctionApplication.Persistence.Entities.AuctionDb", "Auction")
+                        .WithMany("BidDbs")
                         .HasForeignKey("AuctionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("OnlineAuctionApplication.Persistence.Entities.UserDb", "BidderDb")
-                        .WithMany()
+                    b.HasOne("OnlineAuctionApplication.Persistence.Entities.UserDb", "Bidder")
+                        .WithMany("BidDbs")
                         .HasForeignKey("BidderId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.Navigation("AuctionDb");
+                    b.Navigation("Auction");
 
-                    b.Navigation("BidderDb");
+                    b.Navigation("Bidder");
+                });
+
+            modelBuilder.Entity("OnlineAuctionApplication.Persistence.Entities.AuctionDb", b =>
+                {
+                    b.Navigation("BidDbs");
+                });
+
+            modelBuilder.Entity("OnlineAuctionApplication.Persistence.Entities.UserDb", b =>
+                {
+                    b.Navigation("AuctionDbs");
+
+                    b.Navigation("BidDbs");
                 });
 #pragma warning restore 612, 618
         }
