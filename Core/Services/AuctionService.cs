@@ -23,5 +23,10 @@ namespace OnlineAuctionApplication.Core.Services
         {
             return auctionRepository.GetOngoingAuctions();
         }
+
+        public void UpdateDescription(int auctionId, string newDescription)
+        {
+            auctionRepository.UpdateDescription(auctionId, newDescription);
+        }
     }
 }

@@ -24,8 +24,8 @@ namespace OnlineAuctionApplication.Core.Services
 
         public User GetUserById(string id)
         {
-            throw new NotImplementedException();
-        }
+            return userRepository.GetUserById(id);
+        }        
 
         public void Update(User user)
         {

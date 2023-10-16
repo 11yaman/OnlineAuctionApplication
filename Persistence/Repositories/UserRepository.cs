@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using OnlineAuctionApplication.Core.Models;
 using OnlineAuctionApplication.Persistence.Entities;
+using OnlineAuctionApplication.ViewModels;
 
 namespace OnlineAuctionApplication.Persistence.Repositories
 {
@@ -23,7 +24,7 @@ namespace OnlineAuctionApplication.Persistence.Repositories
 
         public async Task AddOrUpdateAsync(User user)
         {
-            UserDb existingUser = context.UserDbs.Find(user.Id);
+            var existingUser = context.UserDbs.SingleOrDefault(e => e.Id == user.Id);
 
             if (existingUser == null)
             {
@@ -40,7 +41,8 @@ namespace OnlineAuctionApplication.Persistence.Repositories
 
         public User GetUserById(string id)
         {
-            throw new NotImplementedException();
+            var userDb = context.UserDbs.FirstOrDefault(u => u.Id == id);
+            return mapper.Map<User>(userDb); 
         }
 
         public void Update(User user)

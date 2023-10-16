@@ -8,5 +8,7 @@ namespace OnlineAuctionApplication.Core.Services
 
         List<Auction> GetOngoingAuctions();
 
+        void UpdateDescription(int auctionId, string newDescription);
+
     }
 }

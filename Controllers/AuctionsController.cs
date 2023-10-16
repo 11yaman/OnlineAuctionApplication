@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using OnlineAuctionApplication.Areas.Identity.Data;
 using OnlineAuctionApplication.Core.Models;
 using OnlineAuctionApplication.Core.Services;
 using OnlineAuctionApplication.ViewModels;
@@ -13,11 +15,13 @@ namespace OnlineAuctionApplication.Controllers
     {
         private readonly IAuctionService auctionService;
         private readonly IMapper mapper;
+        private readonly UserManager<ApplicationIdentityUser> userManager;
 
-        public AuctionsController(IAuctionService auctionService, IMapper mapper)
+        public AuctionsController(IAuctionService auctionService, IMapper mapper, UserManager<ApplicationIdentityUser> userManager)
         {
             this.auctionService = auctionService;
             this.mapper = mapper;
+            this.userManager = userManager;
         }
 
 
@@ -48,16 +52,16 @@ namespace OnlineAuctionApplication.Controllers
         // POST: AuctionsController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(CreateAuctionVM vm)
         {
-            try
+            var inloggedUser = userManager.FindByNameAsync(User.Identity.Name).Result;
+            if (ModelState.IsValid)
             {
-                return RedirectToAction(nameof(Index));
+                Auction auction = new(vm.Name, vm.Description, vm.StartingPrice, vm.EndTime, inloggedUser.Id);
+                auctionService.CreateAuction(auction);
+                return RedirectToAction("Index");
             }
-            catch
-            {
-                return View();
-            }
+            return View(vm);
         }
 
         // GET: AuctionsController/Edit/5
@@ -72,7 +76,7 @@ namespace OnlineAuctionApplication.Controllers
         public ActionResult Edit(int id, IFormCollection collection)
         {
             try
-            {
+        {
                 return RedirectToAction(nameof(Index));
             }
             catch

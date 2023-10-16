@@ -6,6 +6,7 @@ namespace OnlineAuctionApplication.Persistence.Repositories
     {
         public void CreateAuction(Auction auction);
         public List<Auction> GetOngoingAuctions();
+        void UpdateDescription(int auctionId, string newDescription);
 
     }
 }

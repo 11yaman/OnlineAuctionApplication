@@ -18,7 +18,11 @@ namespace OnlineAuctionApplication.Persistence.Repositories
 
         public void CreateAuction(Auction auction)
         {
-            throw new NotImplementedException();
+            AuctionDb auctionDb = mapper.Map<AuctionDb>(auction);
+            auctionDb.SellerId = auction.SellerId;
+
+            context.AuctionDbs.Add(auctionDb);
+            context.SaveChanges(); 
         }
 
         public List<Auction> GetOngoingAuctions()
@@ -29,6 +33,22 @@ namespace OnlineAuctionApplication.Persistence.Repositories
                 auctions.Add(mapper.Map<Auction>(adb));
             }
             return auctions;
+        }
+
+        public void UpdateDescription(int auctionId, string newDescription)
+        {
+            var auctionDb = context.AuctionDbs.SingleOrDefault(a => a.Id == auctionId);
+
+            if (auctionDb != null)
+            {
+                auctionDb.Description = newDescription;
+
+                context.SaveChanges();
+            }
+            else
+            {
+                throw new InvalidOperationException("Auction not found.");
+            }
         }
     }
 }
