@@ -19,9 +19,19 @@ namespace OnlineAuctionApplication.Core.Services
             auctionRepository.CreateAuction(auction);
         }
 
+        public Auction GetAuctionById(int auctionId)
+        {
+            return auctionRepository.GetAuctionById(auctionId);   
+        }
+
         public List<Auction> GetOngoingAuctions()
         {
             return auctionRepository.GetOngoingAuctions();
+        }
+
+        public List<Auction> GetUserAuctions(string userId)
+        {
+            return auctionRepository.GetUserAuctions(userId);
         }
 
         public void UpdateDescription(int auctionId, string newDescription)

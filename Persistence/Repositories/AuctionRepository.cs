@@ -39,7 +39,21 @@ namespace OnlineAuctionApplication.Persistence.Repositories
                 .OrderBy(adb => adb.EndTime)
                 .ToList();
             List<Auction> auctions = new();
-            foreach (var adb in  auctionDbs) { 
+            foreach (var adb in auctionDbs) { 
+                auctions.Add(mapper.Map<Auction>(adb));
+            }
+            return auctions;
+        }
+
+        public List<Auction> GetUserAuctions(string userId)
+        {
+            List<AuctionDb> auctionDbs = context.AuctionDbs
+                .Where(adb => adb.SellerId == userId)
+                .OrderByDescending(adb => adb.EndTime)
+                .ToList();
+            List<Auction> auctions = new();
+            foreach (var adb in auctionDbs)
+            {
                 auctions.Add(mapper.Map<Auction>(adb));
             }
             return auctions;

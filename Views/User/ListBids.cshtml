@@ -6,10 +6,6 @@
 
 <h1>Bids</h1>
 
-<p>
-    <a asp-controller="Bids" asp-action="MakeBid" 
-    asp-route-auctionId="@ViewContext.RouteData.Values["auctionId"]">Make New Bid</a>
-</p>
 <table class="table">
     <thead>
         <tr>
@@ -20,8 +16,9 @@
                 Time Created
             </th>
             <th>
-                Bidder
+                Username
             </th>
+            <th></th>
         </tr>
     </thead>
     <tbody>

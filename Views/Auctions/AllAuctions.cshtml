@@ -1,13 +1,13 @@
 ﻿@model IEnumerable<OnlineAuctionApplication.ViewModels.AuctionVM>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "All Auctions";
 }
 
 <h1>Ongoing auctions</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-controller="User" asp-action="CreateAuction">Create New</a>
 </p>
 <table class="table">
     <thead>

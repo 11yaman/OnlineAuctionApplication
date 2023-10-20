@@ -17,18 +17,25 @@ namespace OnlineAuctionApplication.Core.Services
             this.auctionRepository = auctionRepository; 
         }
 
-        public List<Bid> GetBidList(int auctionId)
+        public List<Bid> GetOngoingAuctionBids(int auctionId)
         {
+            Auction auction = auctionRepository.GetAuctionById(auctionId);
+            if (auction == null || auction.EndTime < DateTime.Now)
+                throw new InvalidOperationException();
+            return bidRepository.GetBidList(auctionId);
+        }
+
+        public List<Bid> GetUserAuctionBids(string userId, int auctionId)
+        {
+            Auction auction = auctionRepository.GetAuctionById(auctionId);
+            if (auction == null || auction.SellerId != userId)
+                throw new InvalidOperationException();
+
             return bidRepository.GetBidList(auctionId);
         }
 
         public void MakeBid(Bid bid)
         {
-            Console.WriteLine("Make Bid " + bid.ToString());
-            //it must be higher than previous bids
-            //user cant bid own auctions
-            //add to db
-
             Auction auction = auctionRepository.GetAuctionById(bid.AuctionId);
 
             if (auction.SellerId == bid.BidderId)

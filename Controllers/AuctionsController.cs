@@ -23,10 +23,11 @@ namespace OnlineAuctionApplication.Controllers
             this.mapper = mapper;
             this.userManager = userManager;
         }
-
+        
 
         // GET: AuctionsController
-        public ActionResult Index()
+        [Route("[controller]")]
+        public ActionResult AllAuctions()
         {
             List<Auction> auctions = auctionService.GetOngoingAuctions();
             List<AuctionVM> auctionVMs = new List<AuctionVM>();
@@ -36,34 +37,5 @@ namespace OnlineAuctionApplication.Controllers
             }
             return View(auctionVMs);
         }
-
-        // GET: AuctionsController/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        // GET: AuctionsController/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: AuctionsController/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(CreateAuctionVM vm)
-        {
-            var inloggedUser = userManager.FindByNameAsync(User.Identity.Name).Result;
-            if (ModelState.IsValid)
-            {
-                Auction auction = new(vm.Name, vm.Description, vm.StartingPrice,
-                    vm.EndTime, inloggedUser.Id);
-                auctionService.CreateAuction(auction);
-                return RedirectToAction("Index");
-            }
-            return View(vm);
-        }
-
     }
 }

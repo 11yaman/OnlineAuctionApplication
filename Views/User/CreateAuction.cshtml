@@ -1,14 +1,14 @@
 ﻿@model OnlineAuctionApplication.ViewModels.CreateAuctionVM
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Create Auction";
 }
 
 <h1>Create New Auction</h1>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
+        <form asp-action="CreateAuction">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Name" class="control-label">Name</label>
@@ -39,7 +39,7 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="OwnAuctions" asp-controller="User">Back to List</a>
 </div>
 
 @section Scripts {
