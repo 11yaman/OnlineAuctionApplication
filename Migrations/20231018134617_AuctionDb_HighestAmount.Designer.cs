@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OnlineAuctionApplication.Persistence;
 
@@ -11,9 +12,11 @@ using OnlineAuctionApplication.Persistence;
 namespace OnlineAuctionApplication.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231018134617_AuctionDb_HighestAmount")]
+    partial class AuctionDb_HighestAmount
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -57,7 +60,7 @@ namespace OnlineAuctionApplication.Migrations
 
                     b.HasIndex("SellerId");
 
-                    b.ToTable("AuctionDbs", (string)null);
+                    b.ToTable("AuctionDbs");
 
                     b.HasData(
                         new
@@ -109,7 +112,7 @@ namespace OnlineAuctionApplication.Migrations
 
                     b.HasIndex("BidderId");
 
-                    b.ToTable("BidDbs", (string)null);
+                    b.ToTable("BidDbs");
 
                     b.HasData(
                         new
@@ -144,7 +147,7 @@ namespace OnlineAuctionApplication.Migrations
                     b.HasIndex("Username")
                         .IsUnique();
 
-                    b.ToTable("UserDbs", (string)null);
+                    b.ToTable("UserDbs");
 
                     b.HasData(
                         new

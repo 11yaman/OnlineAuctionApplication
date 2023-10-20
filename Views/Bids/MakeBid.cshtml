@@ -1,0 +1,33 @@
+﻿@model OnlineAuctionApplication.ViewModels.MakeBidVM
+
+@{
+    ViewData["Title"] = "Make Bid";
+}
+
+<h1>Make New Bid</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="MakeBid">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Amount" class="control-label"></label>
+                <input asp-for="Amount" class="form-control" />
+                <span asp-validation-for="Amount" class="text-danger"></span>
+            </div>
+            <br/>
+            <div class="form-group">
+                <input type="submit" value="Make Bid" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-controller="Bids" asp-action="ListBids" asp-route-auctionId="@ViewContext.RouteData.Values["auctionId"]">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

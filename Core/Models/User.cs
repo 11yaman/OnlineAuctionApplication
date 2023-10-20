@@ -13,5 +13,10 @@
             Id = id;
             Username = username;
         }
+
+        public override string? ToString()
+        {
+            return $"User ID: {Id}, Username: {Username}";
+        }
     }
 }

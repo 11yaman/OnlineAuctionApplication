@@ -19,10 +19,10 @@
                 @Html.DisplayNameFor(model => model.Description)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.StartingPrice)
+                Starting Price
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.EndTime)
+                End Time
             </th>
             <th></th>
         </tr>
@@ -37,14 +37,13 @@
                 @Html.DisplayFor(modelItem => item.Description)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.StartingPrice)
+                @Html.DisplayFor(modelItem => item.StartingPrice) SEK
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.EndTime)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ })
+                @Html.ActionLink("Bids", "ListBids", "Bids", new { auctionId=item.Id }, null)
             </td>
         </tr>
 }

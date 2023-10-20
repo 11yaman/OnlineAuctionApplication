@@ -4,16 +4,35 @@
     {
         public int Id { get; set; }
 
-        //auction/auctionId
+        public double Amount { get; set; }
 
+        public DateTime TimeCreated { get; set; }
+
+        public int AuctionId { get; set; } 
+
+        public string BidderId { get; set; }
         public User Bidder { get; set; }
-        public double BidAmount { get; set; }
 
-        public Bid(int id, User bidder, double bidAmount)
+        public Bid(int id, double amount, DateTime timeCreated, int auctionId, string bidderId)
         {
             Id = id;
-            Bidder = bidder;
-            BidAmount = bidAmount;
+            Amount = amount;
+            TimeCreated = timeCreated;
+            AuctionId = auctionId;
+            BidderId = bidderId;
+        }
+
+        public Bid(double amount, DateTime timeCreated, int auctionId, string bidderId)
+        {
+            Amount = amount;
+            TimeCreated = timeCreated;
+            AuctionId = auctionId;
+            BidderId = bidderId;
+        }
+
+        public override string? ToString()
+        {
+            return $"Bid ID: {Id}, Amount: {Amount}, Auction ID: {AuctionId}, Bidder ID: {BidderId}";
         }
     }
 }

@@ -46,7 +46,7 @@ namespace OnlineAuctionApplication.Persistence
             BidDb bid1 = new BidDb
             {
                 Id = -1,
-                BidAmount = 120.0,
+                Amount = 120.0,
                 BidderId = "-2",
                 AuctionId = -1 
             };
@@ -54,7 +54,7 @@ namespace OnlineAuctionApplication.Persistence
             BidDb bid2 = new BidDb
             {
                 Id = -2,
-                BidAmount = 60.0,
+                Amount = 60.0,
                 BidderId = "-1",
                 AuctionId = -2 
             };

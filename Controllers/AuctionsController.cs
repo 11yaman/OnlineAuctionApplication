@@ -57,53 +57,13 @@ namespace OnlineAuctionApplication.Controllers
             var inloggedUser = userManager.FindByNameAsync(User.Identity.Name).Result;
             if (ModelState.IsValid)
             {
-                Auction auction = new(vm.Name, vm.Description, vm.StartingPrice, vm.EndTime, inloggedUser.Id);
+                Auction auction = new(vm.Name, vm.Description, vm.StartingPrice,
+                    vm.EndTime, inloggedUser.Id);
                 auctionService.CreateAuction(auction);
                 return RedirectToAction("Index");
             }
             return View(vm);
         }
 
-        // GET: AuctionsController/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: AuctionsController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-        {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: AuctionsController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: AuctionsController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
     }
 }

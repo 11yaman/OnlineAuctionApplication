@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using OnlineAuctionApplication.Core.Models;
+using OnlineAuctionApplication.ViewModels;
 using System.ComponentModel.DataAnnotations;
 
 namespace OnlineAuctionApplication.Persistence.Entities
@@ -15,6 +16,12 @@ namespace OnlineAuctionApplication.Persistence.Entities
 
         public List<AuctionDb> AuctionDbs { get; set; } = new List<AuctionDb>();
         public List<BidDb> BidDbs { get; set; } = new List<BidDb>();
+
+
+        public override string? ToString()
+        {
+            return $"User ID: {Id}, Username: {Username}";
+        }
 
     }
 }

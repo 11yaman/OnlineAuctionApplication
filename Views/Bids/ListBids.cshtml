@@ -1,0 +1,41 @@
+﻿@model IEnumerable<OnlineAuctionApplication.ViewModels.BidVM>
+
+@{
+    ViewData["Title"] = "ListBids";
+}
+
+<h1>Bids</h1>
+
+<p>
+    <a asp-controller="Bids" asp-action="MakeBid" asp-route-auctionId="@ViewContext.RouteData.Values["auctionId"]">Make New Bid</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Amount
+            </th>
+            <th>
+                Time Created
+            </th>
+            <th>
+                Bidder
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Amount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TimeCreated)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BidderVM.Username)
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

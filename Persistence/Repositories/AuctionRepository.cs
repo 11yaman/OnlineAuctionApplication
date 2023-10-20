@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using OnlineAuctionApplication.Core.Models;
 using OnlineAuctionApplication.Persistence.Entities;
+using OnlineAuctionApplication.ViewModels;
 
 namespace OnlineAuctionApplication.Persistence.Repositories
 {
@@ -25,10 +26,19 @@ namespace OnlineAuctionApplication.Persistence.Repositories
             context.SaveChanges(); 
         }
 
+        public Auction GetAuctionById(int auctionId)
+        {
+            var auctionDb = context.AuctionDbs.FirstOrDefault(a => a.Id == auctionId);
+            return mapper.Map<Auction>(auctionDb);        
+        }
+
         public List<Auction> GetOngoingAuctions()
         {
-            List<AuctionDb> auctionDbs = context.AuctionDbs.Where(adb => adb.EndTime > DateTime.Now).ToList();
-            List<Auction> auctions = new List<Auction>();
+            List<AuctionDb> auctionDbs = context.AuctionDbs
+                .Where(adb => adb.EndTime > DateTime.Now)
+                .OrderBy(adb => adb.EndTime)
+                .ToList();
+            List<Auction> auctions = new();
             foreach (var adb in  auctionDbs) { 
                 auctions.Add(mapper.Map<Auction>(adb));
             }
@@ -42,7 +52,6 @@ namespace OnlineAuctionApplication.Persistence.Repositories
             if (auctionDb != null)
             {
                 auctionDb.Description = newDescription;
-
                 context.SaveChanges();
             }
             else

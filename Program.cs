@@ -11,8 +11,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IAuctionService, AuctionService>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IBidService, BidService>();
 builder.Services.AddScoped<IAuctionRepository, AuctionRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IBidRepository, BidRepository>();
 
 // Add AutoMapper scanning (requires AutoMapper package)
 builder.Services.AddAutoMapper(typeof(Program));

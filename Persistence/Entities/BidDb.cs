@@ -9,15 +9,24 @@ namespace OnlineAuctionApplication.Persistence.Entities
         [Key]
         public int Id { get; set; }
         [Required]
-        public double BidAmount { get; set; }
+        public double Amount { get; set; }
+
+        [Required]
+        public DateTime TimeCreated { get; set; }
 
         [ForeignKey("BidderId")]
         public UserDb Bidder { get; set; }
-        public String BidderId { get; set; }
+        public string BidderId { get; set; }
 
         [ForeignKey("AuctionId")]
         public AuctionDb Auction { get; set; }
-        public int AuctionId { get; set; } 
+        public int AuctionId { get; set; }
+
+        public override string? ToString()
+        {
+            return $"Bid ID: {Id}, Amount: {Amount}, Auction ID: {AuctionId}, " +
+                $"Bidder ID: {BidderId}";
+        }
 
     }
 }

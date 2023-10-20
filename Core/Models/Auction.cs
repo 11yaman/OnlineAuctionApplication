@@ -12,13 +12,17 @@
         private List<Bid> bids = new List<Bid>();
         public IEnumerable<Bid> Bids => bids;
 
-        public Auction(int id, string name, string description, double startingPrice, DateTime endTime)
+        public double HighestAmount { get; set; }
+
+        public Auction(int id, string name, string description, double startingPrice, DateTime endTime, string sellerId)
         {
             Id = id;
             Name = name;
             Description = description;
             StartingPrice = startingPrice;
             EndTime = endTime;
+            SellerId = sellerId;
+            HighestAmount = StartingPrice;
         }
 
         public Auction(string name, string description, double startingPrice, DateTime endTime, string sellerId)
@@ -28,6 +32,7 @@
             StartingPrice = startingPrice;
             EndTime = endTime;
             SellerId = sellerId;
+            HighestAmount = StartingPrice;
         }
     }
 }

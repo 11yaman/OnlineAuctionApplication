@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OnlineAuctionApplication.Persistence;
 
@@ -11,9 +12,11 @@ using OnlineAuctionApplication.Persistence;
 namespace OnlineAuctionApplication.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231017230126_BidAmount_renamed")]
+    partial class BidAmount_renamed
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -38,9 +41,6 @@ namespace OnlineAuctionApplication.Migrations
                     b.Property<DateTime>("EndTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<double>("HighestAmount")
-                        .HasColumnType("float");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -57,15 +57,14 @@ namespace OnlineAuctionApplication.Migrations
 
                     b.HasIndex("SellerId");
 
-                    b.ToTable("AuctionDbs", (string)null);
+                    b.ToTable("AuctionDbs");
 
                     b.HasData(
                         new
                         {
                             Id = -1,
                             Description = "Description for Auction 1",
-                            EndTime = new DateTime(2023, 10, 19, 15, 46, 17, 159, DateTimeKind.Local).AddTicks(148),
-                            HighestAmount = 0.0,
+                            EndTime = new DateTime(2023, 10, 19, 1, 1, 26, 110, DateTimeKind.Local).AddTicks(6197),
                             Name = "Auction 1",
                             SellerId = "-1",
                             StartingPrice = 100.0
@@ -74,8 +73,7 @@ namespace OnlineAuctionApplication.Migrations
                         {
                             Id = -2,
                             Description = "Description for Auction 2",
-                            EndTime = new DateTime(2023, 10, 20, 15, 46, 17, 159, DateTimeKind.Local).AddTicks(191),
-                            HighestAmount = 0.0,
+                            EndTime = new DateTime(2023, 10, 20, 1, 1, 26, 110, DateTimeKind.Local).AddTicks(6254),
                             Name = "Auction 2",
                             SellerId = "-2",
                             StartingPrice = 50.0
@@ -100,16 +98,13 @@ namespace OnlineAuctionApplication.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<DateTime>("TimeCreated")
-                        .HasColumnType("datetime2");
-
                     b.HasKey("Id");
 
                     b.HasIndex("AuctionId");
 
                     b.HasIndex("BidderId");
 
-                    b.ToTable("BidDbs", (string)null);
+                    b.ToTable("BidDbs");
 
                     b.HasData(
                         new
@@ -117,16 +112,14 @@ namespace OnlineAuctionApplication.Migrations
                             Id = -1,
                             Amount = 120.0,
                             AuctionId = -1,
-                            BidderId = "-2",
-                            TimeCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            BidderId = "-2"
                         },
                         new
                         {
                             Id = -2,
                             Amount = 60.0,
                             AuctionId = -2,
-                            BidderId = "-1",
-                            TimeCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            BidderId = "-1"
                         });
                 });
 
@@ -144,7 +137,7 @@ namespace OnlineAuctionApplication.Migrations
                     b.HasIndex("Username")
                         .IsUnique();
 
-                    b.ToTable("UserDbs", (string)null);
+                    b.ToTable("UserDbs");
 
                     b.HasData(
                         new
