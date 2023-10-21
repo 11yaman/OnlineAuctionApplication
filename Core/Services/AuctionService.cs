@@ -29,13 +29,27 @@ namespace OnlineAuctionApplication.Core.Services
             return auctionRepository.GetOngoingAuctions();
         }
 
-        public List<Auction> GetUserAuctions(string userId)
+        public List<Auction> GetUserOwnAuctions(string userId)
         {
-            return auctionRepository.GetUserAuctions(userId);
+            return auctionRepository.GetUserOwnAuctions(userId);
         }
 
-        public void UpdateDescription(int auctionId, string newDescription)
+        public IEnumerable<Auction> GetUserWonAuctions(string userId)
         {
+            return auctionRepository.GetUserWonAuctions(userId);
+        }
+
+        public IEnumerable<Auction> GetAuctionsWithUserBids(string userId)
+        {
+            return auctionRepository.GetAuctionsWithUserBids(userId);
+        }
+
+        public void UpdateDescription(int auctionId, string newDescription, string userId)
+        {
+            var auction = auctionRepository.GetAuctionById(auctionId);
+            if (auction == null || !auction.SellerId.Equals(userId) || auction.EndTime < DateTime.Now)
+                throw new InvalidOperationException();
+
             auctionRepository.UpdateDescription(auctionId, newDescription);
         }
     }

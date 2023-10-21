@@ -10,7 +10,7 @@ using OnlineAuctionApplication.ViewModels;
 
 namespace OnlineAuctionApplication.Controllers
 {
-    [Route("Auctions/[controller]/[action]/{auctionId}")]
+    [Route("Auction/{auctionId}/[action]")]
     public class BidsController : Controller
     {
         private readonly IBidService bidService;
@@ -25,7 +25,7 @@ namespace OnlineAuctionApplication.Controllers
             this.userManager = userManager;
         }
 
-        // GET: Auctions/ListBids/{auctionId}
+        // GET: Auctions/{auctionId}/Bids
         public ActionResult ListBids(int auctionId)
         {
             try
@@ -38,20 +38,21 @@ namespace OnlineAuctionApplication.Controllers
                     vms.Add(bvm);
                 }
                 return View(vms);
-            } catch (Exception)
+            } 
+            catch (Exception)
             {
-                return NotFound();
+                return Forbid();
             }
         }
 
 
-        // GET: Auctions/MakeBid/{auctionId}
+        // GET: Auctions/{auctionId}/Bids/MakeBid
         public ActionResult MakeBid(int auctionId)
         {
             return View();
         }
 
-        // POST: Auctions/MakeBid/{auctionId}
+        // POST: Auctions/{auctionId}/MakeBid
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult MakeBid(int auctionId, MakeBidVM vm)
@@ -61,14 +62,14 @@ namespace OnlineAuctionApplication.Controllers
             if (ModelState.IsValid)
             {
                 Bid bid = new(vm.Amount, DateTime.Now ,vm.AuctionId, inloggedUser.Id);
-                Console.WriteLine(bid.AuctionId +" " + bid.Amount);
                 try
                 {
                     bidService.MakeBid(bid);
                     return RedirectToAction("ListBids", new { auctionId = vm.AuctionId });
                 }
-                catch (InvalidOperationException)
+                catch (InvalidOperationException e)
                 {
+                    return Forbid();
                 }
             }
             return View(vm);

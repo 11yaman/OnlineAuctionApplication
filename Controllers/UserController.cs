@@ -39,13 +39,35 @@ namespace OnlineAuctionApplication.Controllers
         {
             var inloggedUser = userManager.FindByNameAsync(User.Identity.Name).Result;
 
-            List<Auction> auctions = auctionService.GetUserAuctions(inloggedUser.Id);
+            List<Auction> auctions = auctionService.GetUserOwnAuctions(inloggedUser.Id);
             List<AuctionVM> auctionVMs = new List<AuctionVM>();
             foreach (var a in auctions)
             {
                 auctionVMs.Add(mapper.Map<AuctionVM>(a));
             }
             return View(auctionVMs);
+        }
+
+        // GET: UserController/Bids/{auctionId}
+        [Route("[controller]/Auction/{auctionId}/Bids")]
+        public ActionResult ListBids(int auctionId)
+        {
+            var inloggedUser = userManager.FindByNameAsync(User.Identity.Name).Result;
+            try
+            {
+                var bids = bidService.GetUserAuctionBids(inloggedUser.Id, auctionId);
+                var vms = new List<BidVM>();
+                foreach (var b in bids)
+                {
+                    var bvm = mapper.Map<BidVM>(b);
+                    vms.Add(bvm);
+                }
+                return View(vms);
+            }
+            catch (Exception)
+            {
+                return Forbid();
+            }
         }
 
         // GET: UserController/CreateAuction
@@ -70,32 +92,15 @@ namespace OnlineAuctionApplication.Controllers
             return View(vm);
         }
 
-        // GET: UserController/ListBids/{auctionId}
-        [Route("[controller]/[action]/{auctionId}")]
-        public ActionResult ListBids(int auctionId)
-        {
-            var inloggedUser = userManager.FindByNameAsync(User.Identity.Name).Result;
-            try
-            {
-                var bids = bidService.GetUserAuctionBids(inloggedUser.Id, auctionId);
-                var vms = new List<BidVM>();
-                foreach (var b in bids)
-                {
-                    var bvm = mapper.Map<BidVM>(b);
-                    vms.Add(bvm);
-                }
-                return View(vms);
-            } catch (Exception) 
-            {
-                return NotFound();
-            }
-        }
-
         // GET: UserController/EditAuction/{auctionId}
         [Route("[controller]/[action]/{auctionId}")]
         public ActionResult EditAuction(int auctionId)
         {
+            var inloggedUser = userManager.FindByNameAsync(User.Identity.Name).Result;
             var auction = auctionService.GetAuctionById(auctionId);
+            if (auction.SellerId != inloggedUser.Id)
+                return Forbid();
+
             return View(new EditAuctionVM
             {
                 Description = auction.Description,
@@ -109,15 +114,49 @@ namespace OnlineAuctionApplication.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult EditAuction(EditAuctionVM vm)
         {
+            var inloggedUser = userManager.FindByNameAsync(User.Identity.Name).Result;
             try
             {
-                auctionService.UpdateDescription(vm.AuctionId, vm.Description);
+                auctionService.UpdateDescription(vm.AuctionId, vm.Description, inloggedUser.Id);
                 return RedirectToAction("OwnAuctions");
-            } catch (Exception e)
+            } catch (Exception)
             {
                 return View(vm);
             }
 
+        }
+
+        // GET: UserController/WonAuctions
+        [Route("[controller]/WonAuctions")]
+        public ActionResult WonAuctions(int auctionId)
+        {
+            var inloggedUser = userManager.FindByNameAsync(User.Identity.Name).Result;
+
+            var auctions = auctionService.GetUserWonAuctions(inloggedUser.Id);
+            var vms = new List<AuctionVM>();
+            foreach (var a in auctions)
+            {
+                var vm = mapper.Map<AuctionVM>(a);
+                vms.Add(vm);
+            }
+            return View(vms);
+        }
+
+
+        // GET: UserController/WonAuctions
+        [Route("[controller]/AuctionsWithUserBids")]
+        public ActionResult AuctionsWithUserBids(int auctionId)
+        {
+            var inloggedUser = userManager.FindByNameAsync(User.Identity.Name).Result;
+
+            var auctions = auctionService.GetAuctionsWithUserBids(inloggedUser.Id);
+            var vms = new List<AuctionVM>();
+            foreach (var a in auctions)
+            {
+                var vm = mapper.Map<AuctionVM>(a);
+                vms.Add(vm);
+            }
+            return View(vms);
         }
     }
 }

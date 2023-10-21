@@ -45,7 +45,7 @@ namespace OnlineAuctionApplication.Persistence.Repositories
             return auctions;
         }
 
-        public List<Auction> GetUserAuctions(string userId)
+        public List<Auction> GetUserOwnAuctions(string userId)
         {
             List<AuctionDb> auctionDbs = context.AuctionDbs
                 .Where(adb => adb.SellerId == userId)
@@ -53,6 +53,39 @@ namespace OnlineAuctionApplication.Persistence.Repositories
                 .ToList();
             List<Auction> auctions = new();
             foreach (var adb in auctionDbs)
+            {
+                auctions.Add(mapper.Map<Auction>(adb));
+            }
+            return auctions;
+        }
+
+        //The query can be optimized by adding HighestBid obj to Auction instead of HighestAmount double
+        public IEnumerable<Auction> GetUserWonAuctions(string userId)
+        {
+            var wonAuctions = context.AuctionDbs
+                .Where(adb => adb.EndTime < DateTime.Now)
+                .Where(adb => adb.BidDbs.Any(bid => bid.BidderId == userId && bid.Amount == adb.HighestAmount))
+                .OrderByDescending(adb => adb.EndTime)
+                .ToList();
+
+            List<Auction> auctions = new();
+            foreach (var adb in wonAuctions)
+            {
+                auctions.Add(mapper.Map<Auction>(adb));
+            }
+            return auctions;
+        }
+
+        public IEnumerable<Auction> GetAuctionsWithUserBids(string userId)
+        {
+            var ongoingAuctions = context.AuctionDbs
+                        .Where(adb => adb.EndTime > DateTime.Now)
+                        .Where(adb => adb.BidDbs.Any(bid => bid.BidderId == userId))
+                        .OrderByDescending(adb => adb.EndTime)
+                        .ToList();
+
+            List<Auction> auctions = new();
+            foreach (var adb in ongoingAuctions)
             {
                 auctions.Add(mapper.Map<Auction>(adb));
             }

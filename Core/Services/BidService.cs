@@ -37,10 +37,10 @@ namespace OnlineAuctionApplication.Core.Services
         public void MakeBid(Bid bid)
         {
             Auction auction = auctionRepository.GetAuctionById(bid.AuctionId);
-
+            if (auction.EndTime < DateTime.Now)
+                throw new InvalidOperationException("This auction has ended");
             if (auction.SellerId == bid.BidderId)
                 throw new InvalidOperationException("The user can't bid on own auctions.");
-
             if (bid.Amount <= auction.HighestAmount)
                 throw new InvalidOperationException("The bid must be higher than the current highest bid.");
 

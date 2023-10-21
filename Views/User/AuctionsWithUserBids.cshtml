@@ -1,14 +1,11 @@
 ﻿@model IEnumerable<OnlineAuctionApplication.ViewModels.AuctionVM>
 
 @{
-    ViewData["Title"] = "Own Auctions";
+    ViewData["Title"] = "AuctionsWithUserBids";
 }
 
-<h1>Own Auctions</h1>
+<h1>Ongoing Auctions I have Bid On</h1>
 
-<p>
-    <a asp-controller="User" asp-action="CreateAuction">Create New</a>
-</p>
 <table class="table">
     <thead>
         <tr>
@@ -20,6 +17,9 @@
             </th>
             <th>
                 Starting Price (SEK)
+            </th>
+            <th>
+                Highest Bid (SEK)
             </th>
             <th>
                 End Time
@@ -40,11 +40,13 @@
                 @Html.DisplayFor(modelItem => item.StartingPrice)
             </td>
             <td>
+                @Html.DisplayFor(modelItem => item.HighestAmount)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.EndTime)
             </td>
             <td>
-                @Html.ActionLink("Bids", "ListBids", new { auctionId=item.Id }) |
-                @Html.ActionLink("Edit", "EditAuction", new { auctionId = item.Id })
+                @Html.ActionLink("Bids", "ListBids", "Bids", new { auctionId = item.Id })
             </td>
         </tr>
 }

@@ -65,7 +65,8 @@ namespace OnlineAuctionApplication.Persistence
                 .HasForeignKey(bid => bid.BidderId)
                 .OnDelete(DeleteBehavior.NoAction);
 
-            modelBuilder.Entity<BidDb>().HasData(bid1, bid2);
+            modelBuilder.Entity<BidDb>()
+                .HasData(bid1, bid2);
         }
     }
 }

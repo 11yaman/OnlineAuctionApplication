@@ -21,8 +21,6 @@ namespace OnlineAuctionApplication.Persistence.Entities
         [ForeignKey("SellerId")]
         public UserDb Seller { get; set; }
         public String SellerId { get; set; }
-        [InverseProperty("Auction")]
         public double HighestAmount { get; set; }
-
     }
 }
