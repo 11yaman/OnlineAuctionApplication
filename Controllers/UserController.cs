@@ -98,7 +98,8 @@ namespace OnlineAuctionApplication.Controllers
         {
             var inloggedUser = userManager.FindByNameAsync(User.Identity.Name).Result;
             var auction = auctionService.GetAuctionById(auctionId);
-            if (auction.SellerId != inloggedUser.Id)
+
+            if (auction.SellerId != inloggedUser.Id || auction.EndTime < DateTime.Now)
                 return Forbid();
 
             return View(new EditAuctionVM
@@ -119,9 +120,9 @@ namespace OnlineAuctionApplication.Controllers
             {
                 auctionService.UpdateDescription(vm.AuctionId, vm.Description, inloggedUser.Id);
                 return RedirectToAction("OwnAuctions");
-            } catch (Exception)
+            } catch (InvalidOperationException)
             {
-                return View(vm);
+                return Forbid();
             }
 
         }

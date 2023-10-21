@@ -59,12 +59,11 @@ namespace OnlineAuctionApplication.Persistence.Repositories
             return auctions;
         }
 
-        //The query can be optimized by adding HighestBid obj to Auction instead of HighestAmount double
         public IEnumerable<Auction> GetUserWonAuctions(string userId)
         {
             var wonAuctions = context.AuctionDbs
                 .Where(adb => adb.EndTime < DateTime.Now)
-                .Where(adb => adb.BidDbs.Any(bid => bid.BidderId == userId && bid.Amount == adb.HighestAmount))
+                .Where(adb => adb.HighestBid.BidderId.Equals(userId))
                 .OrderByDescending(adb => adb.EndTime)
                 .ToList();
 

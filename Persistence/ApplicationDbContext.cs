@@ -27,7 +27,8 @@ namespace OnlineAuctionApplication.Persistence
                 Description = "Description for Auction 1",
                 StartingPrice = 100.0,
                 EndTime = DateTime.Now.AddHours(24),
-                SellerId = "-1"
+                SellerId = "-1",
+                HighestBidId = null
             };
 
             AuctionDb auction2 = new AuctionDb 
@@ -37,11 +38,19 @@ namespace OnlineAuctionApplication.Persistence
                 Description = "Description for Auction 2",
                 StartingPrice = 50.0,
                 EndTime = DateTime.Now.AddHours(48),
-                SellerId = "-2"
+                SellerId = "-2",
+                HighestBidId = null
             };
 
             modelBuilder.Entity<AuctionDb>()
+                .HasOne(a => a.HighestBid)
+                .WithOne()
+                .HasForeignKey<AuctionDb>(a => a.HighestBidId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<AuctionDb>()
                 .HasData(auction1, auction2);
+
 
             BidDb bid1 = new BidDb
             {

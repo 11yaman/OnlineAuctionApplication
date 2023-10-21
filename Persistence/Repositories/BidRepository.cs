@@ -22,10 +22,10 @@ namespace OnlineAuctionApplication.Persistence.Repositories
             context.BidDbs.Add(bidDb);
             var auctionDb = bidDb.Auction;
 
-            if (auctionDb == null || auctionDb.HighestAmount > bidDb.Amount)
+            if (auctionDb == null || auctionDb.HighestBid?.Amount > bidDb.Amount)
                 throw new InvalidOperationException();
 
-            auctionDb.HighestAmount = bidDb.Amount;
+            auctionDb.HighestBid = bidDb;
             context.SaveChanges();
         }
 

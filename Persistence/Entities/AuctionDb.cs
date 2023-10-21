@@ -16,11 +16,16 @@ namespace OnlineAuctionApplication.Persistence.Entities
         public double StartingPrice { get; set; }
         [Required]
         public DateTime EndTime { get; set; }
+
+        [InverseProperty("Auction")]
         public List<BidDb> BidDbs { get; set; } = new List<BidDb>();
 
         [ForeignKey("SellerId")]
         public UserDb Seller { get; set; }
         public String SellerId { get; set; }
-        public double HighestAmount { get; set; }
+
+        [ForeignKey("HighestBidId")]
+        public BidDb? HighestBid { get; set; }
+        public int? HighestBidId { get; set; }
     }
 }

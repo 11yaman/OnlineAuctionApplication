@@ -43,8 +43,12 @@
                 @Html.DisplayFor(modelItem => item.EndTime)
             </td>
             <td>
-                @Html.ActionLink("Bids", "ListBids", new { auctionId=item.Id }) |
-                @Html.ActionLink("Edit", "EditAuction", new { auctionId = item.Id })
+                @Html.ActionLink("Bids", "ListBids", new { auctionId = item.Id })
+                @if (item.EndTime > DateTime.Now)
+                {
+                    <text> | </text>
+                    @Html.ActionLink("Edit", "EditAuction", new { auctionId = item.Id })
+                }
             </td>
         </tr>
 }
