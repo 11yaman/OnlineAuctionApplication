@@ -1,40 +1,20 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using OnlineAuctionApplication.Core.Models;
 using OnlineAuctionApplication.Persistence.Entities;
 using OnlineAuctionApplication.ViewModels;
 
 namespace OnlineAuctionApplication.Persistence.Repositories
 {
-    public class AuctionRepository : IAuctionRepository
+    public class AuctionRepository : GenericRepository<AuctionDb, Auction>, IAuctionRepository
     {
-
-        private readonly ApplicationDbContext context;
-        private readonly IMapper mapper;
-
-        public AuctionRepository(ApplicationDbContext context, IMapper mapper)
+        public AuctionRepository(ApplicationDbContext context, IMapper mapper) : base(context, mapper)
         {
-            this.context = context;
-            this.mapper = mapper;
         }
 
-        public void CreateAuction(Auction auction)
+        public IEnumerable<Auction> GetAllOngoingAuctions()
         {
-            AuctionDb auctionDb = mapper.Map<AuctionDb>(auction);
-            auctionDb.SellerId = auction.SellerId;
-
-            context.AuctionDbs.Add(auctionDb);
-            context.SaveChanges(); 
-        }
-
-        public Auction GetAuctionById(int auctionId)
-        {
-            var auctionDb = context.AuctionDbs.FirstOrDefault(a => a.Id == auctionId);
-            return mapper.Map<Auction>(auctionDb);        
-        }
-
-        public List<Auction> GetOngoingAuctions()
-        {
-            List<AuctionDb> auctionDbs = context.AuctionDbs
+            List<AuctionDb> auctionDbs = dbSet
                 .Where(adb => adb.EndTime > DateTime.Now)
                 .OrderBy(adb => adb.EndTime)
                 .ToList();
@@ -45,10 +25,10 @@ namespace OnlineAuctionApplication.Persistence.Repositories
             return auctions;
         }
 
-        public List<Auction> GetUserOwnAuctions(string userId)
+        public IEnumerable<Auction> GetAuctionsBySeller(string sellerId)
         {
-            List<AuctionDb> auctionDbs = context.AuctionDbs
-                .Where(adb => adb.SellerId == userId)
+            List<AuctionDb> auctionDbs = dbSet
+                .Where(adb => adb.SellerId == sellerId)
                 .OrderByDescending(adb => adb.EndTime)
                 .ToList();
             List<Auction> auctions = new();
@@ -59,11 +39,12 @@ namespace OnlineAuctionApplication.Persistence.Repositories
             return auctions;
         }
 
-        public IEnumerable<Auction> GetUserWonAuctions(string userId)
+        public IEnumerable<Auction> GetWonAuctionsByBidder(string bidderId)
         {
-            var wonAuctions = context.AuctionDbs
+            var wonAuctions = dbSet
                 .Where(adb => adb.EndTime < DateTime.Now)
-                .Where(adb => adb.HighestBid.BidderId.Equals(userId))
+                .Where(adb => adb.HighestBid.BidderId.Equals(bidderId))
+                .Include(adb => adb.HighestBid)
                 .OrderByDescending(adb => adb.EndTime)
                 .ToList();
 
@@ -75,11 +56,12 @@ namespace OnlineAuctionApplication.Persistence.Repositories
             return auctions;
         }
 
-        public IEnumerable<Auction> GetAuctionsWithUserBids(string userId)
+        public IEnumerable<Auction> GetOngoingAuctionsByBidder(string userId)
         {
-            var ongoingAuctions = context.AuctionDbs
+            var ongoingAuctions = dbSet
                         .Where(adb => adb.EndTime > DateTime.Now)
                         .Where(adb => adb.BidDbs.Any(bid => bid.BidderId == userId))
+                        .Include(adb => adb.HighestBid)
                         .OrderByDescending(adb => adb.EndTime)
                         .ToList();
 
@@ -93,17 +75,12 @@ namespace OnlineAuctionApplication.Persistence.Repositories
 
         public void UpdateDescription(int auctionId, string newDescription)
         {
-            var auctionDb = context.AuctionDbs.SingleOrDefault(a => a.Id == auctionId);
+            var auctionDb = dbSet.SingleOrDefault(a => a.Id == auctionId);
 
             if (auctionDb != null)
-            {
                 auctionDb.Description = newDescription;
-                context.SaveChanges();
-            }
             else
-            {
                 throw new InvalidOperationException("Auction not found.");
-            }
         }
     }
 }

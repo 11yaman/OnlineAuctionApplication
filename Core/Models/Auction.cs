@@ -12,7 +12,7 @@
         private List<Bid> bids = new List<Bid>();
         public IEnumerable<Bid> Bids => bids;
 
-        public double HighestAmount { get; set; }
+        public Bid HighestBid { get; set; } = null;
 
         public Auction(int id, string name, string description, double startingPrice, DateTime endTime, string sellerId)
         {
@@ -22,7 +22,6 @@
             StartingPrice = startingPrice;
             EndTime = endTime;
             SellerId = sellerId;
-            HighestAmount = StartingPrice;
         }
 
         public Auction(string name, string description, double startingPrice, DateTime endTime, string sellerId)
@@ -32,7 +31,11 @@
             StartingPrice = startingPrice;
             EndTime = endTime;
             SellerId = sellerId;
-            HighestAmount = StartingPrice;
+        }
+
+        public override string? ToString()
+        {
+            return $"Auction ID: {Id}, Name: {Name}, Description: {Description}, SellerId : {SellerId}";
         }
     }
 }

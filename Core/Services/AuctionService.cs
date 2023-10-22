@@ -7,50 +7,52 @@ namespace OnlineAuctionApplication.Core.Services
 {
     public class AuctionService : IAuctionService
     {
-        private IAuctionRepository auctionRepository;
+        private readonly IUnitOfWork unitOfWork;
 
-        public AuctionService(IAuctionRepository auctionRepository)
+        public AuctionService(IUnitOfWork unitOfWork)
         {
-            this.auctionRepository = auctionRepository;
+            this.unitOfWork = unitOfWork;
         }
 
         public void CreateAuction(Auction auction)
         {
-            auctionRepository.CreateAuction(auction);
+            unitOfWork.Auctions.Add(auction);
+            unitOfWork.Save();
         }
 
-        public List<Auction> GetOngoingAuctions()
+        public IEnumerable<Auction> GetAllOngoingAuctions()
         {
-            return auctionRepository.GetOngoingAuctions();
+            return unitOfWork.Auctions.GetAllOngoingAuctions();
         }
 
         public Auction GetAuctionById(int auctionId)
         {
-            return auctionRepository.GetAuctionById(auctionId);
+            return unitOfWork.Auctions.GetByID(auctionId);
         }
 
-        public List<Auction> GetUserOwnAuctions(string userId)
+        public IEnumerable<Auction> GetAuctionsBySeller(string sellerId)
         {
-            return auctionRepository.GetUserOwnAuctions(userId);
+            return unitOfWork.Auctions.GetAuctionsBySeller(sellerId);
         }
 
-        public IEnumerable<Auction> GetUserWonAuctions(string userId)
+        public IEnumerable<Auction> GetWonAuctionsByBidder(string bidderId)
         {
-            return auctionRepository.GetUserWonAuctions(userId);
+            return unitOfWork.Auctions.GetWonAuctionsByBidder(bidderId);
         }
 
-        public IEnumerable<Auction> GetAuctionsWithUserBids(string userId)
+        public IEnumerable<Auction> GetOngoingAuctionsByBidder(string bidderId)
         {
-            return auctionRepository.GetAuctionsWithUserBids(userId);
+            return unitOfWork.Auctions.GetOngoingAuctionsByBidder(bidderId);
         }
 
-        public void UpdateDescription(int auctionId, string newDescription, string userId)
+        public void UpdateDescription(int auctionId, string newDescription, string sellerId)
         {
-            var auction = auctionRepository.GetAuctionById(auctionId);
-            if (auction == null || !auction.SellerId.Equals(userId) || auction.EndTime < DateTime.Now)
+            var auction = unitOfWork.Auctions.GetByID(auctionId);
+            if (auction == null || !auction.SellerId.Equals(sellerId) || auction.EndTime < DateTime.Now)
                 throw new InvalidOperationException();
 
-            auctionRepository.UpdateDescription(auctionId, newDescription);
+            unitOfWork.Auctions.UpdateDescription(auctionId, newDescription);
+            unitOfWork.Save();
         }
     }
 }

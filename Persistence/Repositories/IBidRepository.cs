@@ -1,10 +1,10 @@
 ﻿using OnlineAuctionApplication.Core.Models;
+using OnlineAuctionApplication.Persistence.Entities;
 
 namespace OnlineAuctionApplication.Persistence.Repositories
 {
-    public interface IBidRepository
+    public interface IBidRepository : IGenericRepository<BidDb, Bid>
     {
-        void AddBid(Bid bid);
-        List<Bid> GetBidList(int auctionId);
+        IEnumerable<Bid> GetBidsWithBidders(int auctionId);
     }
 }

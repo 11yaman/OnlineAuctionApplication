@@ -10,10 +10,10 @@ namespace OnlineAuctionApplication.Mappings
     {
         public BidProfile()
         {
-            CreateMap<BidDb, Bid>().ForMember(dest => dest.Bidder, src => src.MapFrom(src => src.Bidder));
-            CreateMap<BidVM, Bid>().ForMember(dest => dest.Bidder, src => src.MapFrom(src => src.BidderVM));
             CreateMap<Bid, BidDb>().ForMember(dest => dest.Bidder, src => src.MapFrom(src => src.Bidder));
-            CreateMap<Bid, BidVM>().ForMember(dest => dest.BidderVM, src => src.MapFrom(src => src.Bidder));
+            CreateMap<BidDb, Bid>().ForMember(dest => dest.Bidder, src => src.MapFrom(src => src.Bidder));
+            CreateMap<Bid, BidVM>().ForMember(dest => dest.Bidder, src => src.MapFrom(src => src.Bidder));
+            CreateMap<BidVM, Bid>();
         }
     }
 }

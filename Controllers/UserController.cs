@@ -39,7 +39,7 @@ namespace OnlineAuctionApplication.Controllers
         {
             var inloggedUser = userManager.FindByNameAsync(User.Identity.Name).Result;
 
-            List<Auction> auctions = auctionService.GetUserOwnAuctions(inloggedUser.Id);
+            var auctions = auctionService.GetAuctionsBySeller(inloggedUser.Id);
             List<AuctionVM> auctionVMs = new List<AuctionVM>();
             foreach (var a in auctions)
             {
@@ -55,7 +55,7 @@ namespace OnlineAuctionApplication.Controllers
             var inloggedUser = userManager.FindByNameAsync(User.Identity.Name).Result;
             try
             {
-                var bids = bidService.GetUserAuctionBids(inloggedUser.Id, auctionId);
+                var bids = bidService.GetBidsForAuctionBySeller(inloggedUser.Id, auctionId);
                 var vms = new List<BidVM>();
                 foreach (var b in bids)
                 {
@@ -133,7 +133,7 @@ namespace OnlineAuctionApplication.Controllers
         {
             var inloggedUser = userManager.FindByNameAsync(User.Identity.Name).Result;
 
-            var auctions = auctionService.GetUserWonAuctions(inloggedUser.Id);
+            var auctions = auctionService.GetWonAuctionsByBidder(inloggedUser.Id);
             var vms = new List<AuctionVM>();
             foreach (var a in auctions)
             {
@@ -150,7 +150,7 @@ namespace OnlineAuctionApplication.Controllers
         {
             var inloggedUser = userManager.FindByNameAsync(User.Identity.Name).Result;
 
-            var auctions = auctionService.GetAuctionsWithUserBids(inloggedUser.Id);
+            var auctions = auctionService.GetOngoingAuctionsByBidder(inloggedUser.Id);
             var vms = new List<AuctionVM>();
             foreach (var a in auctions)
             {

@@ -5,45 +5,26 @@ using OnlineAuctionApplication.Persistence.Entities;
 
 namespace OnlineAuctionApplication.Persistence.Repositories
 {
-    public class BidRepository : IBidRepository
+    public class BidRepository : GenericRepository<BidDb, Bid>, IBidRepository
     {
-        private readonly ApplicationDbContext context;
-        private readonly IMapper mapper;
-
-        public BidRepository(ApplicationDbContext context, IMapper mapper)
+        public BidRepository(ApplicationDbContext context, IMapper mapper) : base(context, mapper)
         {
-            this.context = context;
-            this.mapper = mapper;
         }
 
-        public void AddBid(Bid bid)
+        public IEnumerable<Bid> GetBidsWithBidders(int auctionId)
+        {
+            return Find(filter: b => b.AuctionId == auctionId,
+                includeProperties: "Bidder",
+                orderBy: b => b.OrderByDescending(b => b.TimeCreated));
+        }
+
+        public override void Add(Bid bid)
         {
             var bidDb = mapper.Map<BidDb>(bid);
-            context.BidDbs.Add(bidDb);
+            dbSet.Add(bidDb);
+
             var auctionDb = bidDb.Auction;
-
-            if (auctionDb == null || auctionDb.HighestBid?.Amount > bidDb.Amount)
-                throw new InvalidOperationException();
-
             auctionDb.HighestBid = bidDb;
-            context.SaveChanges();
-        }
-
-
-        public List<Bid> GetBidList(int auctionId)
-        {
-            var bidDbs = context.BidDbs
-            .Where(bdb => bdb.AuctionId == auctionId)
-            .Include(bdb => bdb.Bidder)
-            .OrderByDescending(bdb => bdb.TimeCreated)
-            .ToList();
-
-            var bids = new List<Bid>();
-            foreach (var bdb in bidDbs)
-            {
-                bids.Add(mapper.Map<Bid>(bdb));
-            }
-            return bids;
         }
     }
 }

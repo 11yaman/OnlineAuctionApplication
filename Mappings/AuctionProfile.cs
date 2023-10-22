@@ -7,11 +7,12 @@ namespace OnlineAuctionApplication.Mappings
 {
     public class AuctionProfile : Profile
     {
-        //TODO: Make mapping for User and bind Auction, Bid and user together
         public AuctionProfile()
         {
-            CreateMap<AuctionDb, Auction>().ReverseMap();
-            CreateMap<AuctionVM, Auction>().ReverseMap();
+            CreateMap<Auction, AuctionDb>().ForMember(dest => dest.HighestBid, src => src.MapFrom(src => src.HighestBid));
+            CreateMap<AuctionDb, Auction>().ForMember(dest => dest.HighestBid, src => src.MapFrom(src => src.HighestBid));
+            CreateMap<Auction, AuctionVM>().ForMember(dest => dest.HighestBid, src => src.MapFrom(src => src.HighestBid));
+            CreateMap<AuctionVM, Auction>();
         }
     }
 }

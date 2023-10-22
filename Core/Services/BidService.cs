@@ -6,45 +6,44 @@ namespace OnlineAuctionApplication.Core.Services
 {
     public class BidService : IBidService
     {
-        private readonly IBidRepository bidRepository;
-        private readonly IMapper mapper;
-        private readonly IAuctionRepository auctionRepository;
+        private readonly IUnitOfWork unitOfWork;
 
-        public BidService(IBidRepository bidRepository, IMapper mapper, IAuctionRepository auctionRepository)
+        public BidService(IUnitOfWork unitOfWork)
         {
-            this.bidRepository = bidRepository;
-            this.mapper = mapper;
-            this.auctionRepository = auctionRepository; 
+            this.unitOfWork = unitOfWork;
         }
 
-        public List<Bid> GetOngoingAuctionBids(int auctionId)
+        public IEnumerable<Bid> GetBidsForOngoingAuction(int auctionId)
         {
-            Auction auction = auctionRepository.GetAuctionById(auctionId);
+            Auction auction = unitOfWork.Auctions.GetByID(auctionId);
             if (auction == null || auction.EndTime < DateTime.Now)
                 throw new InvalidOperationException();
-            return bidRepository.GetBidList(auctionId);
+
+            return unitOfWork.Bids.GetBidsWithBidders(auctionId);
         }
 
-        public List<Bid> GetUserAuctionBids(string userId, int auctionId)
+        public IEnumerable<Bid> GetBidsForAuctionBySeller(string sellerId, int auctionId)
         {
-            Auction auction = auctionRepository.GetAuctionById(auctionId);
-            if (auction == null || auction.SellerId != userId)
+            Auction auction = unitOfWork.Auctions.GetByID(auctionId);
+            if (auction == null || auction.SellerId != sellerId)
                 throw new InvalidOperationException();
 
-            return bidRepository.GetBidList(auctionId);
+            return unitOfWork.Bids.GetBidsWithBidders(auctionId);
         }
 
         public void MakeBid(Bid bid)
         {
-            Auction auction = auctionRepository.GetAuctionById(bid.AuctionId);
-            if (auction.EndTime < DateTime.Now)
-                throw new InvalidOperationException("This auction has ended");
+            Auction auction = unitOfWork.Auctions.GetByID(bid.AuctionId);
+            Console.WriteLine("Auction Id: "+ auction.ToString());
+            if (auction == null || auction.EndTime < DateTime.Now)
+                throw new InvalidOperationException("The auction not found");
             if (auction.SellerId == bid.BidderId)
                 throw new InvalidOperationException("The user can't bid on own auctions.");
-            if (bid.Amount <= auction.HighestAmount)
+            if (auction.HighestBid?.Amount >= bid.Amount || auction.StartingPrice > bid.Amount)
                 throw new InvalidOperationException("The bid must be higher than the current highest bid.");
 
-            bidRepository.AddBid(bid);
+            unitOfWork.Bids.Add(bid);
+            unitOfWork.Save();
         }
     }
 }

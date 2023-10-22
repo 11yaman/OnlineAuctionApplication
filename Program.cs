@@ -15,6 +15,8 @@ builder.Services.AddScoped<IBidService, BidService>();
 builder.Services.AddScoped<IAuctionRepository, AuctionRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IBidRepository, BidRepository>();
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+
 
 // Add AutoMapper scanning (requires AutoMapper package)
 builder.Services.AddAutoMapper(typeof(Program));

@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<OnlineAuctionApplication.ViewModels.AuctionVM>
 
 @{
-    ViewData["Title"] = "AuctionsWithUserBids";
+    ViewData["Title"] = "Auctions With Bids";
 }
 
 <h1>Ongoing Auctions I have Bid On</h1>
@@ -40,7 +40,7 @@
                 @Html.DisplayFor(modelItem => item.StartingPrice)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.HighestAmount)
+                @Html.DisplayFor(modelItem => item.HighestBid.Amount)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.EndTime)

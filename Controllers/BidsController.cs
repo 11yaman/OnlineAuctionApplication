@@ -30,7 +30,7 @@ namespace OnlineAuctionApplication.Controllers
         {
             try
             {
-                var bids = bidService.GetOngoingAuctionBids(auctionId);
+                var bids = bidService.GetBidsForOngoingAuction(auctionId);
                 var vms = new List<BidVM>();
                 foreach (var b in bids)
                 {
@@ -69,6 +69,7 @@ namespace OnlineAuctionApplication.Controllers
                 }
                 catch (InvalidOperationException e)
                 {
+                    Console.WriteLine(e.Message);
                     return Forbid();
                 }
             }

@@ -29,7 +29,7 @@ namespace OnlineAuctionApplication.Controllers
         [Route("[controller]")]
         public ActionResult AllAuctions()
         {
-            List<Auction> auctions = auctionService.GetOngoingAuctions();
+            var auctions = auctionService.GetAllOngoingAuctions();
             List<AuctionVM> auctionVMs = new List<AuctionVM>();
             foreach (var a in auctions)
             {

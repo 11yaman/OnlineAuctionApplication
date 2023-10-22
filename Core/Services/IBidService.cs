@@ -5,7 +5,7 @@ namespace OnlineAuctionApplication.Core.Services
     public interface IBidService
     {
         void MakeBid(Bid bid);
-        List<Bid> GetOngoingAuctionBids(int auctionId);
-        List<Bid> GetUserAuctionBids(string userId, int auctionId);
+        IEnumerable<Bid> GetBidsForOngoingAuction(int auctionId);
+        IEnumerable<Bid> GetBidsForAuctionBySeller(string sellerId, int auctionId);
     }
 }

@@ -6,11 +6,11 @@ namespace OnlineAuctionApplication.Core.Services
     {
         void CreateAuction(Auction auction);
         Auction GetAuctionById(int auctionId);
-        List<Auction> GetOngoingAuctions();
-        List<Auction> GetUserOwnAuctions(string userId);
-        IEnumerable<Auction> GetUserWonAuctions(string userId);
-        IEnumerable<Auction> GetAuctionsWithUserBids(string userId);
-        void UpdateDescription(int auctionId, string newDescription, string userId);
+        IEnumerable<Auction> GetAllOngoingAuctions();
+        IEnumerable<Auction> GetAuctionsBySeller(string sellerId);
+        IEnumerable<Auction> GetWonAuctionsByBidder(string bidderId);
+        IEnumerable<Auction> GetOngoingAuctionsByBidder(string bidderId);
+        void UpdateDescription(int auctionId, string newDescription, string sellerId);
 
     }
 }
