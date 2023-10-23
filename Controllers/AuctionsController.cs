@@ -15,13 +15,11 @@ namespace OnlineAuctionApplication.Controllers
     {
         private readonly IAuctionService auctionService;
         private readonly IMapper mapper;
-        private readonly UserManager<ApplicationIdentityUser> userManager;
 
-        public AuctionsController(IAuctionService auctionService, IMapper mapper, UserManager<ApplicationIdentityUser> userManager)
+        public AuctionsController(IAuctionService auctionService, IMapper mapper)
         {
             this.auctionService = auctionService;
             this.mapper = mapper;
-            this.userManager = userManager;
         }
         
 

@@ -15,8 +15,8 @@ namespace OnlineAuctionApplication.Persistence.Entities
         public DateTime TimeCreated { get; set; }
 
         [ForeignKey("BidderId")]
-        public UserDb Bidder { get; set; }
-        public string BidderId { get; set; }
+        public UserDb? Bidder { get; set; }
+        public string? BidderId { get; set; }
 
         [ForeignKey("AuctionId")]
         public AuctionDb Auction { get; set; }

@@ -30,7 +30,7 @@ namespace OnlineAuctionApplication.Persistence.Repositories
 
             if (filter != null)
             {
-                query = query.Where(filter);
+                query = query.Where(filter).AsNoTracking();
             }
 
             foreach (var includeProperty in includeProperties.Split
@@ -74,6 +74,20 @@ namespace OnlineAuctionApplication.Persistence.Repositories
         {
             var entity = mapper.Map<TEntity>(model);
             dbSet.Update(entity);
+        }        
+        
+        public virtual void Delete(object id)
+        {
+            var entity = dbSet.Find(id);
+            if (entity != null)
+            {
+                dbSet.Remove(entity);
+            }
+        }
+
+        public virtual void Delete(TModel model)
+        {
+            dbSet.Remove(mapper.Map<TEntity>(model));
         }
     }
 }

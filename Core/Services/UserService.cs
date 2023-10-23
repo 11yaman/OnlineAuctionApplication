@@ -1,20 +1,20 @@
 ﻿using OnlineAuctionApplication.Core.Models;
+using OnlineAuctionApplication.Persistence.Entities;
 using OnlineAuctionApplication.Persistence.Repositories;
+using System.Security.Cryptography;
 
 namespace OnlineAuctionApplication.Core.Services
 {
     public class UserService : IUserService
     {
         private readonly IUserRepository userRepository;
+        private readonly IBidService bidService;    
 
-        public UserService(IUserRepository userRepository)
+        public UserService(IUserRepository userRepository, IBidService bidService)
         {
             this.userRepository = userRepository;
-        }
-
-        public void Add(User user)
-        {
-            throw new NotImplementedException();
+            this.bidService = bidService;
+            
         }
 
         public async Task AddOrUpdateAsync(User user)
@@ -22,14 +22,26 @@ namespace OnlineAuctionApplication.Core.Services
             await userRepository.AddOrUpdateAsync(user);
         }
 
+        public IEnumerable<User> GetAllUsers()
+        {
+            return userRepository.GetAll();
+        }
+
+        public string GetRoleByUsername(string username)
+        {
+            return userRepository.GetRoleByUsername(username);
+        }
+
         public User GetUserById(string id)
         {
             return userRepository.GetUserById(id);
-        }        
+        }
 
-        public void Update(User user)
+        public void DeleteUser(string userId)
         {
-            throw new NotImplementedException();
+            //Auctions is handled by Auto Cascading in db
+            bidService.DeleteUserBids(userId);
+            userRepository.Delete(userId);
         }
     }
 }

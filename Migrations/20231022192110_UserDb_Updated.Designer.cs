@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OnlineAuctionApplication.Persistence;
 
@@ -11,9 +12,11 @@ using OnlineAuctionApplication.Persistence;
 namespace OnlineAuctionApplication.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231022192110_UserDb_Updated")]
+    partial class UserDb_Updated
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -55,7 +58,9 @@ namespace OnlineAuctionApplication.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("HighestBidId");
+                    b.HasIndex("HighestBidId")
+                        .IsUnique()
+                        .HasFilter("[HighestBidId] IS NOT NULL");
 
                     b.HasIndex("SellerId");
 
@@ -66,7 +71,7 @@ namespace OnlineAuctionApplication.Migrations
                         {
                             Id = -1,
                             Description = "Description for Auction 1",
-                            EndTime = new DateTime(2023, 10, 24, 19, 18, 36, 170, DateTimeKind.Local).AddTicks(6167),
+                            EndTime = new DateTime(2023, 10, 23, 21, 21, 10, 739, DateTimeKind.Local).AddTicks(5955),
                             Name = "Auction 1",
                             SellerId = "-1",
                             StartingPrice = 100.0
@@ -75,7 +80,7 @@ namespace OnlineAuctionApplication.Migrations
                         {
                             Id = -2,
                             Description = "Description for Auction 2",
-                            EndTime = new DateTime(2023, 10, 25, 19, 18, 36, 170, DateTimeKind.Local).AddTicks(6233),
+                            EndTime = new DateTime(2023, 10, 24, 21, 21, 10, 739, DateTimeKind.Local).AddTicks(6007),
                             Name = "Auction 2",
                             SellerId = "-2",
                             StartingPrice = 50.0
@@ -97,6 +102,7 @@ namespace OnlineAuctionApplication.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("BidderId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("TimeCreated")
@@ -152,13 +158,11 @@ namespace OnlineAuctionApplication.Migrations
                         new
                         {
                             Id = "-1",
-                            UserRole = "User",
                             Username = "user1"
                         },
                         new
                         {
                             Id = "-2",
-                            UserRole = "User",
                             Username = "user2"
                         });
                 });
@@ -166,13 +170,14 @@ namespace OnlineAuctionApplication.Migrations
             modelBuilder.Entity("OnlineAuctionApplication.Persistence.Entities.AuctionDb", b =>
                 {
                     b.HasOne("OnlineAuctionApplication.Persistence.Entities.BidDb", "HighestBid")
-                        .WithMany()
-                        .HasForeignKey("HighestBidId");
+                        .WithOne()
+                        .HasForeignKey("OnlineAuctionApplication.Persistence.Entities.AuctionDb", "HighestBidId")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("OnlineAuctionApplication.Persistence.Entities.UserDb", "Seller")
                         .WithMany("AuctionDbs")
                         .HasForeignKey("SellerId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("HighestBid");
@@ -191,7 +196,8 @@ namespace OnlineAuctionApplication.Migrations
                     b.HasOne("OnlineAuctionApplication.Persistence.Entities.UserDb", "Bidder")
                         .WithMany("BidDbs")
                         .HasForeignKey("BidderId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.Navigation("Auction");
 

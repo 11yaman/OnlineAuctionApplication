@@ -6,12 +6,13 @@ namespace OnlineAuctionApplication.ViewModels
     {
         public string Id { get; set; }
         public string Username { get; set; }
+        public string UserRole { get; set; }
 
         public List<AuctionVM> AuctionVMs = new List<AuctionVM>();
 
         public override string? ToString()
         {
-            return $"User ID: {Id}, Username: {Username}";
+            return $"User ID: {Id}, Username: {Username}, UserRole: {UserRole}";
         }
     }
 }

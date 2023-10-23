@@ -1,25 +1,25 @@
 ﻿@model IEnumerable<OnlineAuctionApplication.ViewModels.AuctionVM>
 
 @{
-    ViewData["Title"] = "Auctions With Bids";
+    ViewData["Title"] = "User Auctions";
 }
 
-<h1>Ongoing Auctions I have Bid On</h1>
+<h1>User Auctions</h1>
 
 <table class="table">
     <thead>
         <tr>
             <th>
-                Name
+                @Html.DisplayNameFor(model => model.Name)
             </th>
             <th>
-                Description
+                @Html.DisplayNameFor(model => model.Description)
             </th>
             <th>
-                Starting Price (SEK)
+                @Html.DisplayNameFor(model => model.StartingPrice)
             </th>
             <th>
-                End Time
+                @Html.DisplayNameFor(model => model.EndTime)
             </th>
             <th></th>
         </tr>
@@ -40,7 +40,8 @@
                 @Html.DisplayFor(modelItem => item.EndTime)
             </td>
             <td>
-                @Html.ActionLink("Bids", "ListBids", "Bids", new { auctionId = item.Id })
+                @Html.ActionLink("Bids", "ListBids", new { auctionId = item.Id }) |
+                @Html.ActionLink("Delete", "DeleteAuction", new { auctionId = item.Id })
             </td>
         </tr>
 }

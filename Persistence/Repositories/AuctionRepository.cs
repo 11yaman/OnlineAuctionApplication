@@ -82,5 +82,26 @@ namespace OnlineAuctionApplication.Persistence.Repositories
             else
                 throw new InvalidOperationException("Auction not found.");
         }
+
+        public void DeleteAuctionAndBids(int auctionId)
+        {
+            var auction = Find(filter: a => a.Id == auctionId, includeProperties: "BidDbs").FirstOrDefault();
+            var auctionBids = auction?.Bids;
+
+            if (auctionBids != null)
+            {
+                foreach (var bid in auctionBids)
+                {
+                    if (bid == auction.HighestBid)
+                    {
+                        bid.Auction.HighestBid = null;
+                        Update(auction);
+                    }
+                    Delete(bid);
+                }
+            }
+            context.SaveChanges();
+            Delete(auction.Id);
+        }
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace OnlineAuctionApplication.Core.Models
+﻿using OnlineAuctionApplication.Persistence.Repositories;
+
+namespace OnlineAuctionApplication.Core.Models
 {
     public class Auction
     {
@@ -8,11 +10,9 @@
         public double StartingPrice { get; set; }
         public DateTime EndTime { get; set; }
         public string SellerId { get; set; }
-
-        private List<Bid> bids = new List<Bid>();
+        private readonly List<Bid> bids = new();
         public IEnumerable<Bid> Bids => bids;
-
-        public Bid HighestBid { get; set; } = null;
+        public Bid? HighestBid { get; set; } = null;
 
         public Auction(int id, string name, string description, double startingPrice, DateTime endTime, string sellerId)
         {

@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using OnlineAuctionApplication.Core.Models;
+using OnlineAuctionApplication.Persistence.Repositories;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace OnlineAuctionApplication.Persistence.Entities
@@ -27,5 +29,12 @@ namespace OnlineAuctionApplication.Persistence.Entities
         [ForeignKey("HighestBidId")]
         public BidDb? HighestBid { get; set; }
         public int? HighestBidId { get; set; }
+
+        public override string? ToString()
+        {
+            return $"ID: {Id}, Name: {Name}, Description: {Description}, " +
+                $"StartingPrice: {StartingPrice}, EndTime: {EndTime}";
+        }
+
     }
 }

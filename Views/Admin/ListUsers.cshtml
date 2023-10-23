@@ -1,0 +1,37 @@
+﻿@model IEnumerable<OnlineAuctionApplication.ViewModels.UserVM>
+
+@{
+    ViewData["Title"] = "Users";
+}
+
+<h1>All Users</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Username
+            </th>
+            <th>
+                Role
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Username)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserRole)
+            </td>
+            <td>
+                @Html.ActionLink("Auctions", "ListAuctions", new { userId = item.Id }) |
+                @Html.ActionLink("Delete", "DeleteUser", new { userId = item.Id })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

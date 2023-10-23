@@ -4,6 +4,8 @@ using OnlineAuctionApplication.Persistence;
 using OnlineAuctionApplication.Persistence.Repositories;
 using OnlineAuctionApplication.Data;
 using OnlineAuctionApplication.Areas.Identity.Data;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -30,8 +32,9 @@ builder.Services.AddDbContext<ApplicationIdentityContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString(
         "ApplicationIdentityDbConnection")));
 
-builder.Services.AddDefaultIdentity<ApplicationIdentityUser>(options => 
+builder.Services.AddDefaultIdentity<ApplicationIdentityUser>(options =>
     options.SignIn.RequireConfirmedAccount = true)
+    .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationIdentityContext>();
 
 var app = builder.Build();
@@ -57,4 +60,35 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.MapRazorPages();
+
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+    if (!await roleManager.RoleExistsAsync("Admin"))
+    {
+        await roleManager.CreateAsync(new IdentityRole("Admin"));
+    }
+}
+
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    var userManager = services.GetRequiredService<UserManager<ApplicationIdentityUser>>();
+
+    string email = "admin@admin.com";
+    string pwd = "Admin.1234";
+    if (await userManager.FindByEmailAsync(email) == null)
+    {
+        var user = new ApplicationIdentityUser
+        {
+            UserName = email,
+            Email = email,
+            EmailConfirmed = true
+        };
+
+        await userManager.CreateAsync(user, pwd);
+        await userManager.AddToRoleAsync(user, "Admin");
+    }
+}
 app.Run();

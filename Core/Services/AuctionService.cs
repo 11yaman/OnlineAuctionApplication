@@ -54,5 +54,14 @@ namespace OnlineAuctionApplication.Core.Services
             unitOfWork.Auctions.UpdateDescription(auctionId, newDescription);
             unitOfWork.Save();
         }
+
+        public void DeleteAuction(int auctionId)
+        {
+            unitOfWork.Bids.DeleteBidsForAuction(auctionId);
+            unitOfWork.Save();
+
+            unitOfWork.Auctions.Delete(auctionId);
+            unitOfWork.Save();
+        }
     }
 }

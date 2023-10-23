@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OnlineAuctionApplication.Persistence;
 
@@ -11,9 +12,11 @@ using OnlineAuctionApplication.Persistence;
 namespace OnlineAuctionApplication.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231023122419_BidDb_BidderId_Updated1")]
+    partial class BidDb_BidderId_Updated1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -66,7 +69,7 @@ namespace OnlineAuctionApplication.Migrations
                         {
                             Id = -1,
                             Description = "Description for Auction 1",
-                            EndTime = new DateTime(2023, 10, 24, 19, 18, 36, 170, DateTimeKind.Local).AddTicks(6167),
+                            EndTime = new DateTime(2023, 10, 24, 14, 24, 19, 7, DateTimeKind.Local).AddTicks(1016),
                             Name = "Auction 1",
                             SellerId = "-1",
                             StartingPrice = 100.0
@@ -75,7 +78,7 @@ namespace OnlineAuctionApplication.Migrations
                         {
                             Id = -2,
                             Description = "Description for Auction 2",
-                            EndTime = new DateTime(2023, 10, 25, 19, 18, 36, 170, DateTimeKind.Local).AddTicks(6233),
+                            EndTime = new DateTime(2023, 10, 25, 14, 24, 19, 7, DateTimeKind.Local).AddTicks(1052),
                             Name = "Auction 2",
                             SellerId = "-2",
                             StartingPrice = 50.0

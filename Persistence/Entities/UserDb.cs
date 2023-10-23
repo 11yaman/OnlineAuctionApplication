@@ -14,13 +14,15 @@ namespace OnlineAuctionApplication.Persistence.Entities
         [Required]
         public string Username { get; set; }
 
+        public string? UserRole { get; set; }
+
         public List<AuctionDb> AuctionDbs { get; set; } = new List<AuctionDb>();
         public List<BidDb> BidDbs { get; set; } = new List<BidDb>();
 
 
         public override string? ToString()
         {
-            return $"User ID: {Id}, Username: {Username}";
+            return $"User ID: {Id}, Username: {Username}, UserRole: {UserRole}";
         }
 
     }

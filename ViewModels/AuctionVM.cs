@@ -9,14 +9,6 @@
         public BidVM HighestBid { get; }
         public DateTime EndTime { get; }
 
-        public AuctionVM(int id, string name, string description, double startingPrice, DateTime endTime)
-        {
-            Id = id;
-            Name = name;
-            Description = description;
-            StartingPrice = startingPrice;
-            EndTime = endTime;
-        }
         public AuctionVM(int id, string name, string description, double startingPrice, BidVM highestBid, DateTime endTime)
         {
             Id = id;
@@ -26,5 +18,12 @@
             HighestBid = highestBid;
             EndTime = endTime;
         }
+
+        public override string? ToString()
+        {
+            return $"ID: {Id}, Name: {Name}, Description: {Description}, " +
+                $"StartingPrice: {StartingPrice}, EndTime: {EndTime}";
+        }
+
     }
 }

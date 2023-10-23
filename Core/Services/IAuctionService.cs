@@ -11,6 +11,6 @@ namespace OnlineAuctionApplication.Core.Services
         IEnumerable<Auction> GetWonAuctionsByBidder(string bidderId);
         IEnumerable<Auction> GetOngoingAuctionsByBidder(string bidderId);
         void UpdateDescription(int auctionId, string newDescription, string sellerId);
-
+        void DeleteAuction(int auctionId);
     }
 }

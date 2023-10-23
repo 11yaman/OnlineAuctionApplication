@@ -128,7 +128,9 @@ namespace OnlineAuctionApplication.Areas.Identity.Pages.Account
                     var identityUser = await _userManager.FindByNameAsync(Input.Email);
                     string userId = identityUser.Id;
                     string userName = identityUser.UserName;
-                    User user = new User(userId, userName);
+                    var roles = await _userManager.GetRolesAsync(identityUser);
+                    string userRole = roles.FirstOrDefault();
+                    User user = new(userId, userName, userRole);
                     await _userService.AddOrUpdateAsync(user);
 
                     return LocalRedirect(returnUrl);

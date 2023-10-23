@@ -4,9 +4,10 @@ namespace OnlineAuctionApplication.Persistence.Repositories
 {
     public interface IUserRepository
     {
-        void Add(User user);
         Task AddOrUpdateAsync(User user);
+        void Delete(string userId);
+        IEnumerable<User> GetAll();
+        string GetRoleByUsername(string username);
         User GetUserById(string id);
-        void Update(User user);
     }
 }

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OnlineAuctionApplication.Persistence;
 
@@ -11,9 +12,11 @@ using OnlineAuctionApplication.Persistence;
 namespace OnlineAuctionApplication.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231023115440_AuctionDb_SellerId_Updated")]
+    partial class AuctionDb_SellerId_Updated
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -66,7 +69,7 @@ namespace OnlineAuctionApplication.Migrations
                         {
                             Id = -1,
                             Description = "Description for Auction 1",
-                            EndTime = new DateTime(2023, 10, 24, 19, 18, 36, 170, DateTimeKind.Local).AddTicks(6167),
+                            EndTime = new DateTime(2023, 10, 24, 13, 54, 40, 789, DateTimeKind.Local).AddTicks(6515),
                             Name = "Auction 1",
                             SellerId = "-1",
                             StartingPrice = 100.0
@@ -75,7 +78,7 @@ namespace OnlineAuctionApplication.Migrations
                         {
                             Id = -2,
                             Description = "Description for Auction 2",
-                            EndTime = new DateTime(2023, 10, 25, 19, 18, 36, 170, DateTimeKind.Local).AddTicks(6233),
+                            EndTime = new DateTime(2023, 10, 25, 13, 54, 40, 789, DateTimeKind.Local).AddTicks(6547),
                             Name = "Auction 2",
                             SellerId = "-2",
                             StartingPrice = 50.0
@@ -97,6 +100,7 @@ namespace OnlineAuctionApplication.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("BidderId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("TimeCreated")
@@ -191,7 +195,8 @@ namespace OnlineAuctionApplication.Migrations
                     b.HasOne("OnlineAuctionApplication.Persistence.Entities.UserDb", "Bidder")
                         .WithMany("BidDbs")
                         .HasForeignKey("BidderId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.Navigation("Auction");
 

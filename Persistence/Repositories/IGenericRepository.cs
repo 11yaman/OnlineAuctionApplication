@@ -12,6 +12,7 @@ namespace OnlineAuctionApplication.Persistence.Repositories
         TModel GetByID(object id);
         void Add(TModel model);
         void Update(TModel model);
-
+        void Delete(object id);
+        void Delete(TModel model);
     }
 }
