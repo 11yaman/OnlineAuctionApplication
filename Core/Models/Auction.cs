@@ -9,6 +9,7 @@ namespace OnlineAuctionApplication.Core.Models
         public string Description { get; set; } 
         public double StartingPrice { get; set; }
         public DateTime EndTime { get; set; }
+        public User Seller { get; set; }
         public string SellerId { get; set; }
         private readonly List<Bid> bids = new();
         public IEnumerable<Bid> Bids => bids;

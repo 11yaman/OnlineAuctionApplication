@@ -6,7 +6,6 @@
         public double Amount { get; set; }
         public DateTime TimeCreated { get; set; }
         public int AuctionId { get; set; } 
-        public Auction Auction { get; set; }
         public string BidderId { get; set; }
         public User Bidder { get; set; }
 

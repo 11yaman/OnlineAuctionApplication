@@ -40,7 +40,7 @@ namespace OnlineAuctionApplication.Controllers
             var inloggedUser = userManager.FindByNameAsync(User.Identity.Name).Result;
 
             var auctions = auctionService.GetAuctionsBySeller(inloggedUser.Id);
-            List<AuctionVM> auctionVMs = new List<AuctionVM>();
+            List<AuctionVM> auctionVMs = new();
             foreach (var a in auctions)
             {
                 auctionVMs.Add(mapper.Map<AuctionVM>(a));
@@ -56,7 +56,7 @@ namespace OnlineAuctionApplication.Controllers
             try
             {
                 var bids = bidService.GetBidsForAuctionBySeller(inloggedUser.Id, auctionId);
-                var vms = new List<BidVM>();
+                List<BidVM> vms = new();
                 foreach (var b in bids)
                 {
                     var bvm = mapper.Map<BidVM>(b);

@@ -1,0 +1,319 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="OnlineAuctionApplication.Core.Models.Bid">
+    <Position X="5" Y="0.5" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAgCAAAAAQAAAAAEQAAAAACAAAAAAAQAAAAAAAAAAAA=</HashCode>
+      <FileName>Core\Models\Bid.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Bidder" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="OnlineAuctionApplication.Core.Models.User">
+    <Position X="2.75" Y="1.25" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAEAQAAAAAAAAAAAAgAAAAAAAAAAAA=</HashCode>
+      <FileName>Core\Models\User.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OnlineAuctionApplication.Core.Models.Auction">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <AssociationLine Name="Bids" Type="OnlineAuctionApplication.Core.Models.Bid" FixedToPoint="true">
+      <Path>
+        <Point X="2" Y="0.729" />
+        <Point X="5" Y="0.729" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAACAAAAEQAgAAEEAAAAAAQAAAAgAQAAABAAAAAACAA=</HashCode>
+      <FileName>Core\Models\Auction.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Seller" />
+      <Property Name="HighestBid" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="Bids" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="OnlineAuctionApplication.Core.Services.AuctionService" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="10" Y="9" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAgQAQAAAIACACAAAYAAAAAAAAAgAABAAA=</HashCode>
+      <FileName>Core\Services\AuctionService.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="unitOfWork" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.148" />
+  </Class>
+  <Class Name="OnlineAuctionApplication.Core.Services.BidService" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="12" Y="9" Width="1.5" />
+    <AssociationLine Name="unitOfWork" Type="OnlineAuctionApplication.Persistence.Repositories.IUnitOfWork" ManuallyRouted="true">
+      <Path>
+        <Point X="12.375" Y="9.562" />
+        <Point X="12.375" Y="9.425" />
+        <Point X="12.375" Y="9.425" />
+        <Point X="12.375" Y="10.5" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="-1.107" Y="0.12" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAACAgAAAACAAAAAAAAAAAEAAAAAIgA=</HashCode>
+      <FileName>Core\Services\BidService.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="unitOfWork" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.1" />
+  </Class>
+  <Class Name="OnlineAuctionApplication.Core.Services.UserService" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="3" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAIAAEAAAAEAAAAAAAAQAAAEAAAgAAAAIEAAAA=</HashCode>
+      <FileName>Core\Services\UserService.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="userRepository" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.223" />
+  </Class>
+  <Class Name="OnlineAuctionApplication.Persistence.Repositories.AuctionRepository" Collapsed="true">
+    <Position X="8.5" Y="16.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAgQAAAAAAAAAAAAAQAAAAAAAAAgAABAAA=</HashCode>
+      <FileName>Persistence\Repositories\AuctionRepository.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="OnlineAuctionApplication.Persistence.Repositories.BidRepository" Collapsed="true">
+    <Position X="13.75" Y="16.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAIAAAAiAAAAAAAAAAAAAAAAAAAQAAAAAAIAAA=</HashCode>
+      <FileName>Persistence\Repositories\BidRepository.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="OnlineAuctionApplication.Persistence.Repositories.GenericRepository&lt;TEntity, TModel&gt;" Collapsed="true">
+    <Position X="11" Y="15" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAYCAAAAAAAIAAAAAAAAAAAAAAEIAAAACAAAgAAAAAA=</HashCode>
+      <FileName>Persistence\Repositories\GenericRepository.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="OnlineAuctionApplication.Persistence.Repositories.UnitOfWork" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="11" Y="12" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+      <Compartment Name="Methods" Collapsed="true" />
+      <Compartment Name="Properties" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAICAIAAASAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Persistence\Repositories\UnitOfWork.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.116" />
+  </Class>
+  <Class Name="OnlineAuctionApplication.Persistence.Repositories.UserRepository" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="3" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAIAAEIAAAAAAAAAAAAQAEAAAAAAgAAAAAAAAA=</HashCode>
+      <FileName>Persistence\Repositories\UserRepository.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.164" />
+  </Class>
+  <Class Name="OnlineAuctionApplication.Persistence.Entities.AuctionDb">
+    <Position X="1.25" Y="14" Width="1.5" />
+    <AssociationLine Name="Seller" Type="OnlineAuctionApplication.Persistence.Entities.UserDb" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="1.625" Y="14" />
+        <Point X="1.625" Y="12.25" />
+        <Point X="3.25" Y="12.25" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAACAAAAEAAgAIAEAAAAAAQAAAAgAQAAABAAgAAACAA=</HashCode>
+      <FileName>Persistence\Entities\AuctionDb.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Seller" />
+      <Property Name="HighestBid" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="BidDbs" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="OnlineAuctionApplication.Persistence.Entities.BidDb">
+    <Position X="5.25" Y="14" Width="1.5" />
+    <AssociationLine Name="Bidder" Type="OnlineAuctionApplication.Persistence.Entities.UserDb" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="6.375" Y="14" />
+        <Point X="6.375" Y="12.25" />
+        <Point X="4.75" Y="12.25" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAgCAAAAAQAAAAAEQAAACACAAAAAAAQAAAAAAAAAAAA=</HashCode>
+      <FileName>Persistence\Entities\BidDb.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Bidder" />
+      <Property Name="Auction" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="OnlineAuctionApplication.Persistence.Entities.UserDb">
+    <Position X="3.25" Y="11.75" Width="1.5" />
+    <AssociationLine Name="AuctionDbs" Type="OnlineAuctionApplication.Persistence.Entities.AuctionDb" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="3.25" Y="12.562" />
+        <Point X="2" Y="12.562" />
+        <Point X="2" Y="14" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="-1.098" Y="0.102" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <AssociationLine Name="BidDbs" Type="OnlineAuctionApplication.Persistence.Entities.BidDb" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="4.75" Y="12.562" />
+        <Point X="5.938" Y="12.562" />
+        <Point X="5.938" Y="14" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAIAEAQAAAAAAAAAAAAgABAAAAAAAAAA=</HashCode>
+      <FileName>Persistence\Entities\UserDb.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="AuctionDbs" />
+      <Property Name="BidDbs" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="OnlineAuctionApplication.Controllers.AdminController" Collapsed="true">
+    <Position X="7.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIQAAAAAAAAIAACEAAAAAAAAAAIAEAAAgAEAABAAAgA=</HashCode>
+      <FileName>Controllers\AdminController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OnlineAuctionApplication.Controllers.AuctionsController" Collapsed="true">
+    <Position X="9.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAIAAAAAAAAAAAAAAAAEAAAAAAAAAAAACA=</HashCode>
+      <FileName>Controllers\AuctionsController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OnlineAuctionApplication.Controllers.BidsController" Collapsed="true">
+    <Position X="11.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIQAAAAAAAAIAAACAAAAAAAAAAAAAAAAgAAAAAAAAAA=</HashCode>
+      <FileName>Controllers\BidsController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OnlineAuctionApplication.Controllers.HomeController" Collapsed="true">
+    <Position X="7.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAQAAAAAAAAAAIAAAAQAAABEEAAAAAAA=</HashCode>
+      <FileName>Controllers\HomeController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OnlineAuctionApplication.Controllers.UserController" Collapsed="true">
+    <Position X="9.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIQAAAAAAAAIAAAABAIAAAAAAAAAEAAAgQEAAEQAAAA=</HashCode>
+      <FileName>Controllers\UserController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="OnlineAuctionApplication.Persistence.Repositories.IAuctionRepository">
+    <Position X="13.75" Y="14" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAgQAAAAAAAAAAAAAQAAAAAAAAAgAABAAA=</HashCode>
+      <FileName>Persistence\Repositories\IAuctionRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="OnlineAuctionApplication.Persistence.Repositories.IBidRepository">
+    <Position X="8.5" Y="14" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAIAAAAiAAAAAAAAAAAAAAAAAAAQAAAAAAIAAA=</HashCode>
+      <FileName>Persistence\Repositories\IBidRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="OnlineAuctionApplication.Persistence.Repositories.IGenericRepository&lt;TEntity, TModel&gt;">
+    <Position X="11" Y="12.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAYAAAAAAAAAAAAAAAAAAAAAAAEIAAAAAAAAgAAAAAA=</HashCode>
+      <FileName>Persistence\Repositories\IGenericRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="OnlineAuctionApplication.Persistence.Repositories.IUnitOfWork">
+    <Position X="11" Y="10.5" Width="1.5" />
+    <AssociationLine Name="Auctions" Type="OnlineAuctionApplication.Persistence.Repositories.IAuctionRepository" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="12.5" Y="11.116" />
+        <Point X="14.812" Y="11.116" />
+        <Point X="14.812" Y="14" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="-0.81" Y="0.148" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <AssociationLine Name="Bids" Type="OnlineAuctionApplication.Persistence.Repositories.IBidRepository" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="11" Y="11.116" />
+        <Point X="8.938" Y="11.116" />
+        <Point X="8.938" Y="14" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAIAAAQAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Persistence\Repositories\IUnitOfWork.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Auctions" />
+      <Property Name="Bids" />
+    </ShowAsAssociation>
+  </Interface>
+  <Interface Name="OnlineAuctionApplication.Persistence.Repositories.IUserRepository">
+    <Position X="3" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAIAAEAAAAAAAAAAAAAQAEAAAAAAgAAAAAAAAA=</HashCode>
+      <FileName>Persistence\Repositories\IUserRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="OnlineAuctionApplication.Core.Services.IAuctionService">
+    <Position X="0.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAgQAQAAAIACAAAAAYAAAAAAAAAgAABAAA=</HashCode>
+      <FileName>Core\Services\IAuctionService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="OnlineAuctionApplication.Core.Services.IBidService">
+    <Position X="5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAACAgAAAAAAAAAAAAAAAAEAAAAAIgA=</HashCode>
+      <FileName>Core\Services\IBidService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="OnlineAuctionApplication.Core.Services.IUserService">
+    <Position X="2.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAIAAEAAAAEAAAAAAAAQAAAAAAAAAAAAAEAAAA=</HashCode>
+      <FileName>Core\Services\IUserService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

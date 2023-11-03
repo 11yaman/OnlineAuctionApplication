@@ -62,6 +62,15 @@ namespace OnlineAuctionApplication.Core.Services
 
             unitOfWork.Auctions.Delete(auctionId);
             unitOfWork.Save();
+        }        
+        
+        public void DeleteUserAuctions(string userId)
+        {
+            var auctionsToDelete = unitOfWork.Auctions.Find(filter: b => b.SellerId == userId).ToList();
+            foreach (var a in auctionsToDelete)
+            {
+                DeleteAuction(a.Id);
+            }
         }
     }
 }

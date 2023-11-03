@@ -9,11 +9,13 @@ namespace OnlineAuctionApplication.Core.Services
     {
         private readonly IUserRepository userRepository;
         private readonly IBidService bidService;    
+        private readonly IAuctionService auctionService;    
 
-        public UserService(IUserRepository userRepository, IBidService bidService)
+        public UserService(IUserRepository userRepository, IBidService bidService, IAuctionService auctionService)
         {
             this.userRepository = userRepository;
             this.bidService = bidService;
+            this.auctionService = auctionService;
             
         }
 
@@ -39,8 +41,8 @@ namespace OnlineAuctionApplication.Core.Services
 
         public void DeleteUser(string userId)
         {
-            //Auctions is handled by Auto Cascading in db
             bidService.DeleteUserBids(userId);
+            auctionService.DeleteUserAuctions(userId);
             userRepository.Delete(userId);
         }
     }

@@ -10,6 +10,5 @@ namespace OnlineAuctionApplication.Persistence.Repositories
         IEnumerable<Auction> GetWonAuctionsByBidder(string bidderId);
         IEnumerable<Auction> GetOngoingAuctionsByBidder(string bidderId);
         void UpdateDescription(int auctionId, string newDescription);
-        void DeleteAuctionAndBids(int auctionId);
     }
 }

@@ -43,7 +43,7 @@ namespace OnlineAuctionApplication.Persistence.Repositories
         {
             var wonAuctions = dbSet
                 .Where(adb => adb.EndTime < DateTime.Now)
-                .Where(adb => adb.HighestBid.BidderId.Equals(bidderId))
+                .Where(adb => adb.HighestBid != null && adb.HighestBid.BidderId== bidderId)
                 .Include(adb => adb.HighestBid)
                 .OrderByDescending(adb => adb.EndTime)
                 .ToList();
@@ -81,27 +81,6 @@ namespace OnlineAuctionApplication.Persistence.Repositories
                 auctionDb.Description = newDescription;
             else
                 throw new InvalidOperationException("Auction not found.");
-        }
-
-        public void DeleteAuctionAndBids(int auctionId)
-        {
-            var auction = Find(filter: a => a.Id == auctionId, includeProperties: "BidDbs").FirstOrDefault();
-            var auctionBids = auction?.Bids;
-
-            if (auctionBids != null)
-            {
-                foreach (var bid in auctionBids)
-                {
-                    if (bid == auction.HighestBid)
-                    {
-                        bid.Auction.HighestBid = null;
-                        Update(auction);
-                    }
-                    Delete(bid);
-                }
-            }
-            context.SaveChanges();
-            Delete(auction.Id);
         }
     }
 }
